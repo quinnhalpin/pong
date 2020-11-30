@@ -4,14 +4,15 @@ import java.util.ArrayList;
 
 public class PhysicsObj {
 	private ArrayList<Integer> pos;
-	private int velocity;
-	private int acc;
+	private Vec vel;
+	private Vec acc;
 
 	public PhysicsObj() {
+		this.pos = new ArrayList<Integer>();
 		this.pos.add(0);
 		this.pos.add(0);
-		this.velocity = 0;
-		this.acc = 0;
+		this.vel = new Vec(0, 0);
+		this.acc = new Vec(0, 0);
 	}
 
 	public ArrayList<Integer> getPos() {
@@ -23,19 +24,19 @@ public class PhysicsObj {
 		pos.set(1, Integer.valueOf(y));
 	}
 
-	public int getVel() {
-		return this.velocity;
+	public Vec getVel() {
+		return this.vel;
 	}
 
-	public void setVel(int v) {
-		this.velocity = v;
+	public void setVel(Vec v) {
+		this.vel = v;
 	}
 
-	public int getAcc() {
+	public Vec getAcc() {
 		return this.acc;
 	}
 
-	public void setAcc(int acc) {
+	public void setAcc(Vec acc) {
 		this.acc = acc;
 	}
 }
