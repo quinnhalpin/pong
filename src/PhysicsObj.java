@@ -1,27 +1,22 @@
 package src;
 
-import java.util.ArrayList;
-
 public class PhysicsObj {
-	private ArrayList<Integer> pos;
+	private Pair<Integer> pos;
 	private Vec vel;
 	private Vec acc;
 
 	public PhysicsObj() {
-		this.pos = new ArrayList<Integer>();
-		this.pos.add(0);
-		this.pos.add(0);
+		this.pos = new Pair<Integer>(0, 0);
 		this.vel = new Vec(0, 0);
 		this.acc = new Vec(0, 0);
 	}
 
-	public ArrayList<Integer> getPos() {
+	public Pair<Integer> getPos() {
 		return this.pos;
 	}
 
 	public void setPos(int x, int y) {
-		pos.set(0, Integer.valueOf(x));
-		pos.set(1, Integer.valueOf(y));
+		this.pos = new Pair<Integer>(x, y);
 	}
 
 	public Vec getVel() {

@@ -28,5 +28,8 @@ public class PongDemo {
 		b.setVel(new Vec(600, 6));
 		System.out.println(b.getAcc());
 		System.out.println(b.getVel());
+
+		PongModel model = new PongModel();
+		System.out.println(model.getScore());
 	} 
 }
