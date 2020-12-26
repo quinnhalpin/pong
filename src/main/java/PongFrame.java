@@ -17,6 +17,7 @@ public class PongFrame extends javax.swing.JFrame {
     Graphics2D g2D;
     int width;
     int height;
+    private PongModel model;
     Dimension panelDimension;
     /**
      * Creates new form PongFrame
@@ -25,9 +26,15 @@ public class PongFrame extends javax.swing.JFrame {
         initComponents();
         g = pongPanel.getGraphics();
         g2D = (Graphics2D) g;
-        Dimension panelDimension = pongPanel.getSize();
+        pongPanel.setPreferredSize(new Dimension(400, 600));
+        panelDimension = pongPanel.getSize();
         width = panelDimension.width;        
         height = panelDimension.height;
+        System.out.println(height);        
+        System.out.println(width);
+
+        model = new PongModel(panelDimension);
+
     }
 
     /**
@@ -115,12 +122,13 @@ public class PongFrame extends javax.swing.JFrame {
         g2D.drawLine(x1, y1, x2, y2);
     }
     
-    private void drawPaddle(int rx, int ry, int height, int width) {
-        g.setColor(Color.WHITE);
-        g.fillRect(rx, ry, width, height);
-        g.drawRect(rx, ry, width, height);
-    }
     
+    private void drawPlayer(Player player) {
+        g.setColor(Color.WHITE);
+        Point p = player.getBottomLeft();
+        g.fillRect((int)p.x, (int) p.y, player.d.width, player.d.height);
+        g.drawRect((int)p.x, (int) p.y, player.d.width, player.d.height);
+    }
     
     private void drawBoard() {
         g.setColor(Color.BLACK);
@@ -129,8 +137,8 @@ public class PongFrame extends javax.swing.JFrame {
         int paddle1X= (int)((double)width*0.05);
         int paddle2X= (int)((double)width*0.95);
         
-        drawPaddle(paddle1X, height/2, 30, 3);
-        drawPaddle(paddle2X, height/2, 30, 3);
+        drawPlayer(model.players.get(0));        
+        drawPlayer(model.players.get(1));
         
         drawDashedLine(Color.WHITE, width/2, 0, width/2, height);
         

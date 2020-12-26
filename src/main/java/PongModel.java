@@ -1,3 +1,6 @@
+
+import java.awt.Dimension;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -9,18 +12,29 @@
  * @author halpin
  */
 public class PongModel {
-    private Pair<Player> players;
-    private Ball ball;
-    private double width;
-    private double height;
-    private Pair<Integer> score;
+    public final Pair<Player> players;
+    public final Ball ball;
+    private Dimension d;
+    public Pair<Integer> score;
+    public final Board board;
 
-    public PongModel() {
-        this.players = new Pair(new Player(), new Player());
-
+    public PongModel(Dimension d) {
+        // private
+        this.d = d;
+        
+        // public
         this.ball = new Ball();
-        this.width = 100;
-        this.height = 50;
         this.score = new Pair(0, 0);
+        Double scoreWidth = d.width*0.1;
+        this.board = new Board(d, scoreWidth);
+    
+        Integer centerHeight = d.height/2;
+        Dimension playerDimension = new Dimension(5, 30);
+        Player player0 = new Player(playerDimension, new Point(scoreWidth, centerHeight));
+        Player player1 = new Player(playerDimension, new Point(d.width - scoreWidth, centerHeight));
+        
+        players = new Pair(player0, player1);
     }
+    
+    
 }

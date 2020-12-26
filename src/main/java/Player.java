@@ -1,3 +1,6 @@
+
+import java.awt.Dimension;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -9,13 +12,26 @@
  * @author halpin
  */
 public class Player extends PhysicsObj{
-    private static int width;
-    private static int height;
+    public static Dimension d;
+    private Point bottomLeft; 
     private String name;
 
-    public Player() {
-        this.width = 1;
-        this.height = 5;
+    public Player(Dimension d) {
+        this.d = d;
+        this.bottomLeft = new Point(0, 0);
+    }
+    
+    public Player(Dimension d, Point center) {
+        this.d = d;
+        setCenter(center);
+    }
+    
+    public void setCenter(Point center) {
+        this.bottomLeft = new Point(center.x - d.width/2, center.y - d.height/2);       
+    }
+    
+    public Point getCenter() {
+        return new Point(bottomLeft.x + d.width/2, bottomLeft.y + d.height/2);   
     }
 
     public void setName(String n) {
@@ -25,4 +41,14 @@ public class Player extends PhysicsObj{
     public String getName() {
         return this.name;
     }
+    
+    public Point getBottomLeft() {
+        return this.bottomLeft;
+    }
+    
+    public void setBottomLeft(Point p) {
+        this.bottomLeft = p;
+    }
+    
+    
 }
