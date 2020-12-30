@@ -13,12 +13,15 @@ import javax.swing.*;
  * @author halpin
  */
 public class Pong {
-    JPanel mainPane;
-    PongPanel pongPanel;
-    JButton startButton;
+    private JPanel mainPane;
+    private PongPanel pongPanel;
+    private JButton startButton;
+    private PongModel model;
     
     public Pong() {
-        pongPanel = new PongPanel(this);
+        Dimension d = new Dimension(500,300);
+        model = new PongModel(d);
+        pongPanel = new PongPanel(this, model);
 
         mainPane = new JPanel();
         mainPane.setLayout(new BoxLayout(mainPane, BoxLayout.PAGE_AXIS));
@@ -30,10 +33,6 @@ public class Pong {
         mainPane.add(startButton);
         
         mainPane.add(pongPanel);
-        Dimension panelDimension = pongPanel.getPreferredSize();
-        System.out.println(panelDimension.width);        
-        System.out.println(panelDimension.height);
-
         mainPane.add(Box.createGlue());
     }
     
@@ -58,7 +57,7 @@ public class Pong {
         System.out.println("Start Game");
         System.out.println(pongPanel.getPreferredSize().height);        
         System.out.println(pongPanel.getPreferredSize().width);
-
+        pongPanel.repaint();
     }
     
     public static void createAndShowGUI() {

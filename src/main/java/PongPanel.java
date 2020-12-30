@@ -12,11 +12,15 @@ import java.awt.*;
  * @author halpin
  */
 public class PongPanel extends javax.swing.JPanel {
+    private Graphics g;
+    private Graphics2D g2D;
+    PongModel model;
 
     /**
      * Creates new form PongPanel
      */
-    public PongPanel(Pong controller) {
+    public PongPanel(Pong controller, PongModel m) {
+        model = m;
         initComponents();
     }
     
@@ -27,14 +31,21 @@ public class PongPanel extends javax.swing.JPanel {
     
     @Override
     public Dimension getPreferredSize() {
-        return new Dimension(500, 300);
+        return model.d;
     }
     
     @Override
     public Dimension getMaximumSize() {
         return getPreferredSize();
     }
-
+    
+    @Override
+    public void paintComponent(Graphics g) {
+        System.out.println("paint component");
+        super.paintComponent(g);        
+        drawBall(g, model.ball);
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -58,7 +69,35 @@ public class PongPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-
+    
+        
+//    private void drawDashedLine(Color c, int x1, int y1, int x2, int y2) {
+//        // TODO: figure out who should store this
+//        float dash1[] = {10.0f};
+//        g2D.setStroke(new BasicStroke(1.0f,
+//                        BasicStroke.CAP_BUTT,
+//                        BasicStroke.JOIN_MITER,
+//                        10.0f, dash1, 0.0f));
+//        g2D.setColor(c);
+//        g2D.drawLine(x1, y1, x2, y2);
+//    }
+//    
+//    
+//    private void drawPlayer(Player player) {
+//        g.setColor(Color.WHITE);
+//        Point p = player.getBottomLeft();
+//        System.out.println(p.x);
+//        g.fillRect((int)p.x, (int) p.y, player.d.width, player.d.height);
+//        g.drawRect((int)p.x, (int) p.y, player.d.width, player.d.height);
+//    }
+    
+    private void drawBall(Graphics g, Ball b) {
+        System.out.println("Draw ball");
+        g.setColor(Color.BLUE);
+        Point bL = b.getBottomLeft();
+        g.drawOval((int)bL.x, (int)bL.y, b.radius, b.radius);
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
 }

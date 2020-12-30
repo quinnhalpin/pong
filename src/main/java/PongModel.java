@@ -14,7 +14,7 @@ import java.awt.Dimension;
 public class PongModel {
     public final Pair<Player> players;
     public final Ball ball;
-    private Dimension d;
+    public Dimension d;
     public Pair<Integer> score;
     public final Board board;
 
