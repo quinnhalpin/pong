@@ -14,10 +14,10 @@ import javax.swing.*;
  * @author halpin
  */
 public class Pong {
-    private JPanel mainPane;
-    private PongPanel pongPanel;
+    private final JPanel mainPane;
+    private final PongPanel pongPanel;
     private JButton startButton;
-    private PongModel model;
+    private final PongModel model;
     
     public Pong() {
         Dimension d = new Dimension(500,300);
@@ -56,14 +56,12 @@ public class Pong {
     
     private void startGame() {
         System.out.println("Start Game");
-        System.out.println(pongPanel.getPreferredSize().height);        
-        System.out.println(pongPanel.getPreferredSize().width);
         pongPanel.repaint();
         ActionListener listener = new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Point center = model.ball.center;
-                model.ball.center = new Point(center.x+5,center.y);
+                Point newCenter = model.ball.v.step(model.ball.center);
+                model.ball.center = newCenter;
                 pongPanel.repaint();
             }
         };

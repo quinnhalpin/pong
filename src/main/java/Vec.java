@@ -1,3 +1,6 @@
+
+import java.util.Random;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -29,7 +32,20 @@ public class Vec {
         return this.magnitude;
     }
 
+    @Override
     public String toString() {
         return "Deg:" + this.degrees + " Mag:" + this.magnitude;
+    }
+    
+    public Point step(Point p) {
+        Double theta = Math.toRadians(this.degrees);
+        int x = (int) (this.magnitude*Math.cos(theta));
+        int y = (int) (this.magnitude*Math.sin(theta));
+        return new Point(p.x+x, p.y+y);
+    }
+    
+    public static Vec getRandomVec(int m) {
+        Double d = new Random().nextDouble()*360;
+        return new Vec(d, m);
     }
 }

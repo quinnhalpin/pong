@@ -11,10 +11,12 @@
 public class Ball {
    public final int radius;
    public Point center;
+   public Vec v;
 
     public Ball(int r, Point c) {
         radius = r;
         center = c;
+        v = Vec.getRandomVec(5);
     }
     
     public Point getBottomLeft() {

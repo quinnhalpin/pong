@@ -41,7 +41,6 @@ public class PongPanel extends javax.swing.JPanel {
     
     @Override
     public void paintComponent(Graphics g) {
-        System.out.println("paint component");
         super.paintComponent(g);        
         drawBall(g, model.ball);
         drawPlayer(g, model.players.get(0));        
@@ -76,13 +75,11 @@ public class PongPanel extends javax.swing.JPanel {
     private void drawPlayer(Graphics g, Player player) {
         g.setColor(Color.WHITE);
         Point p = player.getBottomLeft();
-        System.out.println(p.x);
         g.fillRect(p.x, p.y, player.d.width, player.d.height);
         g.drawRect(p.x, p.y, player.d.width, player.d.height);
     }
     
     private void drawBall(Graphics g, Ball b) {
-        System.out.println("Draw ball");
         g.setColor(Color.BLUE);
         Point bL = b.getBottomLeft();
         g.drawOval(bL.x, bL.y, b.radius, b.radius);
