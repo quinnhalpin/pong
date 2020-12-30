@@ -9,10 +9,10 @@
  * @author halpin
  */
 public class Point {
-    public final double x;
-    public final double y;
+    public final int x;
+    public final int y;
     
-    public Point(double x, double y) {
+    public Point(int x, int y) {
         this.x = x;
         this.y = y;
     }

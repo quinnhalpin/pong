@@ -44,6 +44,8 @@ public class PongPanel extends javax.swing.JPanel {
         System.out.println("paint component");
         super.paintComponent(g);        
         drawBall(g, model.ball);
+        drawPlayer(g, model.players.get(0));        
+        drawPlayer(g, model.players.get(1));
     }
     
     /**
@@ -71,31 +73,20 @@ public class PongPanel extends javax.swing.JPanel {
 
     
         
-//    private void drawDashedLine(Color c, int x1, int y1, int x2, int y2) {
-//        // TODO: figure out who should store this
-//        float dash1[] = {10.0f};
-//        g2D.setStroke(new BasicStroke(1.0f,
-//                        BasicStroke.CAP_BUTT,
-//                        BasicStroke.JOIN_MITER,
-//                        10.0f, dash1, 0.0f));
-//        g2D.setColor(c);
-//        g2D.drawLine(x1, y1, x2, y2);
-//    }
-//    
-//    
-//    private void drawPlayer(Player player) {
-//        g.setColor(Color.WHITE);
-//        Point p = player.getBottomLeft();
-//        System.out.println(p.x);
-//        g.fillRect((int)p.x, (int) p.y, player.d.width, player.d.height);
-//        g.drawRect((int)p.x, (int) p.y, player.d.width, player.d.height);
-//    }
+    private void drawPlayer(Graphics g, Player player) {
+        g.setColor(Color.WHITE);
+        Point p = player.getBottomLeft();
+        System.out.println(p.x);
+        g.fillRect(p.x, p.y, player.d.width, player.d.height);
+        g.drawRect(p.x, p.y, player.d.width, player.d.height);
+    }
     
     private void drawBall(Graphics g, Ball b) {
         System.out.println("Draw ball");
         g.setColor(Color.BLUE);
         Point bL = b.getBottomLeft();
-        g.drawOval((int)bL.x, (int)bL.y, b.radius, b.radius);
+        g.drawOval(bL.x, bL.y, b.radius, b.radius);
+        g.fillOval(bL.x, bL.y, b.radius, b.radius);
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

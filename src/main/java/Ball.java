@@ -18,6 +18,7 @@ public class Ball {
     }
     
     public Point getBottomLeft() {
-        return new Point(center.x - radius, center.y - radius);
+        Point p = new Point(center.x - radius, center.y - radius);
+        return p;
     }
 }

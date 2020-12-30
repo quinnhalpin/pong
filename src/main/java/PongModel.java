@@ -23,13 +23,14 @@ public class PongModel {
         this.d = d;
         
         // public
-        int radius = 5;
-        ball = new Ball(radius, new Point((int)d.width/2,(int) d.height/2));
+        int radius = 10;
+        Point center = new Point((int)d.width/2, (int) d.height/2);
+        ball = new Ball(radius, center);
         score = new Pair(0, 0);
-        Double scoreWidth = d.width*0.1;
+        int scoreWidth = (int) (d.width*0.1);
         board = new Board(d, scoreWidth);
     
-        Integer centerHeight = d.height/2;
+        int centerHeight = d.height/2;
         Dimension playerDimension = new Dimension(5, 30);
         Player player0 = new Player(playerDimension, new Point(scoreWidth, centerHeight));
         Player player1 = new Player(playerDimension, new Point(d.width - scoreWidth, centerHeight));

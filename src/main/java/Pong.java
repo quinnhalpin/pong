@@ -1,5 +1,6 @@
 
 import java.awt.*;
+import java.awt.event.*;
 import javax.swing.*;
 
 /*
@@ -58,6 +59,16 @@ public class Pong {
         System.out.println(pongPanel.getPreferredSize().height);        
         System.out.println(pongPanel.getPreferredSize().width);
         pongPanel.repaint();
+        ActionListener listener = new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Point center = model.ball.center;
+                model.ball.center = new Point(center.x+5,center.y);
+                pongPanel.repaint();
+            }
+        };
+        Timer timer = new Timer(100, listener);
+        timer.start();
     }
     
     public static void createAndShowGUI() {

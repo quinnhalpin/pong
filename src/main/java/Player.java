@@ -27,11 +27,20 @@ public class Player extends PhysicsObj{
     }
     
     public void setCenter(Point center) {
-        this.bottomLeft = new Point(center.x - d.width/2, center.y - d.height/2);       
+        int newX = d.width/2;
+        int newY = d.height/2; 
+        System.out.println(newX);      
+        System.out.println(center.x);
+                
+        this.bottomLeft = new Point(center.x - newX, center.y-newY);       
     }
     
     public Point getCenter() {
-        return new Point(bottomLeft.x + d.width/2, bottomLeft.y + d.height/2);   
+        int newX = d.width/2;
+        int newY = d.height/2;
+        System.out.println(newX);      
+        System.out.println(bottomLeft.x);
+        return new Point( bottomLeft.x + newX, bottomLeft.y + newY);   
     }
 
     public void setName(String n) {
