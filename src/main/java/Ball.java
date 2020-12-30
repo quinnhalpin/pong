@@ -9,9 +9,15 @@
  * @author halpin
  */
 public class Ball {
-   private static double radius;
+   public final int radius;
+   public Point center;
 
-    public Ball() {
-        this.radius = 10;
+    public Ball(int r, Point c) {
+        radius = r;
+        center = c;
+    }
+    
+    public Point getBottomLeft() {
+        return new Point(center.x - radius, center.y - radius);
     }
 }

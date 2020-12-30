@@ -13,20 +13,20 @@ import java.awt.Graphics2D;
  * @author halpin
  */
 public class PongFrame extends javax.swing.JFrame {
-    Graphics g;
-    Graphics2D g2D;
-    int width;
-    int height;
+    private Graphics g;
+    private Graphics2D g2D;
+    private int width;
+    private int height;
     private PongModel model;
-    Dimension panelDimension;
+    private Dimension panelDimension;
     /**
      * Creates new form PongFrame
      */
     public PongFrame() {
         initComponents();
         g = pongPanel.getGraphics();
+        System.out.println(g);
         g2D = (Graphics2D) g;
-        pongPanel.setPreferredSize(new Dimension(400, 600));
         panelDimension = pongPanel.getSize();
         width = panelDimension.width;        
         height = panelDimension.height;
@@ -34,7 +34,10 @@ public class PongFrame extends javax.swing.JFrame {
         System.out.println(width);
 
         model = new PongModel(panelDimension);
-
+    }
+    
+    public void resetGame() {
+        drawBoard();
     }
 
     /**
@@ -61,6 +64,7 @@ public class PongFrame extends javax.swing.JFrame {
 
         scoreLabel.setText("Score");
 
+        pongPanel.setBackground(new java.awt.Color(0, 0, 0));
         pongPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         javax.swing.GroupLayout pongPanelLayout = new javax.swing.GroupLayout(pongPanel);
@@ -113,6 +117,7 @@ public class PongFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_startButtonActionPerformed
     
     private void drawDashedLine(Color c, int x1, int y1, int x2, int y2) {
+        // TODO: figure out who should store this
         float dash1[] = {10.0f};
         g2D.setStroke(new BasicStroke(1.0f,
                         BasicStroke.CAP_BUTT,
@@ -126,22 +131,26 @@ public class PongFrame extends javax.swing.JFrame {
     private void drawPlayer(Player player) {
         g.setColor(Color.WHITE);
         Point p = player.getBottomLeft();
+        System.out.println(p.x);
         g.fillRect((int)p.x, (int) p.y, player.d.width, player.d.height);
         g.drawRect((int)p.x, (int) p.y, player.d.width, player.d.height);
     }
     
+    private void drawBall(Ball b) {
+        g.setColor(Color.BLUE);
+        Point bL = b.getBottomLeft();
+        g.drawOval((int)bL.x, (int)bL.y, b.radius, b.radius);
+    }
+    
     private void drawBoard() {
-        g.setColor(Color.BLACK);
-        g.fillRect(0, 0, width, height);
-        
-        int paddle1X= (int)((double)width*0.05);
-        int paddle2X= (int)((double)width*0.95);
+        System.out.println("draw board");
         
         drawPlayer(model.players.get(0));        
         drawPlayer(model.players.get(1));
         
-        drawDashedLine(Color.WHITE, width/2, 0, width/2, height);
+        drawBall(model.ball);
         
+        drawDashedLine(Color.WHITE, width/2, 0, width/2, height);
     }
     
     
@@ -175,7 +184,9 @@ public class PongFrame extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new PongFrame().setVisible(true);
+                PongFrame frame = new PongFrame();
+                frame.setVisible(true);
+                frame.resetGame();
             }
         });
     }
