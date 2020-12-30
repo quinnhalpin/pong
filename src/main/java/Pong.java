@@ -60,13 +60,28 @@ public class Pong {
         ActionListener listener = new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Point newCenter = model.ball.v.step(model.ball.center);
-                model.ball.center = newCenter;
+                // Boundary detection to change model.ball.v
+                moveBall();
+                moveRobot();
                 pongPanel.repaint();
             }
         };
         Timer timer = new Timer(100, listener);
         timer.start();
+    }
+    
+    private void moveBall() {
+        Point newCenter = model.ball.v.step(model.ball.center);
+        model.ball.center = newCenter;
+    }
+    
+    private void moveRobot() {
+        Player robotPlayer = model.players.get(1);
+        Point robotPlayerCenter = new Point(
+                robotPlayer.getCenter().x, 
+                model.ball.center.y
+        );
+        robotPlayer.setCenter(robotPlayerCenter);
     }
     
     public static void createAndShowGUI() {
