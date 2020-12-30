@@ -16,7 +16,7 @@ public class Ball {
     public Ball(int r, Point c) {
         radius = r;
         center = c;
-        v = Vec.getRandomVec(5);
+        v = Vec.getRandomVec(10);
     }
     
     public Point getBottomLeft() {

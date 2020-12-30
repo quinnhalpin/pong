@@ -18,6 +18,7 @@ public class Pong {
     private final PongPanel pongPanel;
     private JButton startButton;
     private final PongModel model;
+    private Timer timer;
     
     public Pong() {
         Dimension d = new Dimension(500,300);
@@ -57,22 +58,51 @@ public class Pong {
     private void startGame() {
         System.out.println("Start Game");
         pongPanel.repaint();
+        
         ActionListener listener = new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Boundary detection to change model.ball.v
+                if (ballScored()) {
+                    System.out.println("Ball scored");
+                    timer.removeActionListener(this);
+                    return;
+                }
+                if (ballHitNonScoringWall()) {
+                    refractBall();
+                }
                 moveBall();
                 moveRobot();
                 pongPanel.repaint();
             }
         };
-        Timer timer = new Timer(100, listener);
+        timer = new Timer(100, listener);
         timer.start();
     }
     
     private void moveBall() {
         Point newCenter = model.ball.v.step(model.ball.center);
         model.ball.center = newCenter;
+    }
+    
+    private void refractBall() {
+        Vec ballVec = model.ball.v;
+        Double newTheta = (ballVec.getDegrees() + 90) % 360;
+        model.ball.v = new Vec(newTheta, ballVec.getMagnitude());
+    }
+    
+    private boolean ballScored() {
+        return model.ball.center.x <= 0 || model.ball.center.x >= model.d.width;
+    }
+    
+    private boolean ballHitNonScoringWall() {
+        int radius = model.ball.radius;
+        return model.ball.center.x > 0
+                && model.ball.center.x < model.d.width
+                && (
+                    (model.ball.center.y - radius) <= 0
+                    || (model.ball.center.y + radius) >= model.d.height
+                    );
     }
     
     private void moveRobot() {
