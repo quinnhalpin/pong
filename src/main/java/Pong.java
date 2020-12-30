@@ -9,7 +9,7 @@ import javax.swing.*;
  */
 
 /**
- *
+ * Pong Controller
  * @author halpin
  */
 public class Pong {
@@ -25,10 +25,15 @@ public class Pong {
         mainPane.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
         mainPane.add(Box.createRigidArea(new Dimension(0, 5)));
         
+        // Creates Start Button
         startButton = createStartButton();
         mainPane.add(startButton);
         
         mainPane.add(pongPanel);
+        Dimension panelDimension = pongPanel.getPreferredSize();
+        System.out.println(panelDimension.width);        
+        System.out.println(panelDimension.height);
+
         mainPane.add(Box.createGlue());
     }
     
@@ -49,8 +54,11 @@ public class Pong {
         startGame();
     }
     
-    private static void startGame() {
+    private void startGame() {
         System.out.println("Start Game");
+        System.out.println(pongPanel.getPreferredSize().height);        
+        System.out.println(pongPanel.getPreferredSize().width);
+
     }
     
     public static void createAndShowGUI() {

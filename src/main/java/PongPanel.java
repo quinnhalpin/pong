@@ -1,3 +1,6 @@
+
+import java.awt.*;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -15,6 +18,21 @@ public class PongPanel extends javax.swing.JPanel {
      */
     public PongPanel(Pong controller) {
         initComponents();
+    }
+    
+    @Override
+    public Dimension getMinimumSize() {
+        return getPreferredSize();
+    }
+    
+    @Override
+    public Dimension getPreferredSize() {
+        return new Dimension(500, 300);
+    }
+    
+    @Override
+    public Dimension getMaximumSize() {
+        return getPreferredSize();
     }
 
     /**
