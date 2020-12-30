@@ -15,6 +15,7 @@ import javax.swing.*;
 public class Pong {
     JPanel mainPane;
     PongPanel pongPanel;
+    JButton startButton;
     
     public Pong() {
         pongPanel = new PongPanel(this);
@@ -23,8 +24,33 @@ public class Pong {
         mainPane.setLayout(new BoxLayout(mainPane, BoxLayout.PAGE_AXIS));
         mainPane.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
         mainPane.add(Box.createRigidArea(new Dimension(0, 5)));
+        
+        startButton = createStartButton();
+        mainPane.add(startButton);
+        
         mainPane.add(pongPanel);
         mainPane.add(Box.createGlue());
+    }
+    
+    private JButton createStartButton() {
+        startButton = new javax.swing.JButton();
+
+        startButton.setText("Start");
+        startButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                startButtonActionPerformed(evt);
+            }
+        });
+        return startButton;
+    }
+    
+    private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {                                            
+        // TODO add your handling code here:
+        startGame();
+    }
+    
+    private static void startGame() {
+        System.out.println("Start Game");
     }
     
     public static void createAndShowGUI() {
