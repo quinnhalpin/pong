@@ -75,8 +75,8 @@ public class PongPanel extends javax.swing.JPanel {
     private void drawPlayer(Graphics g, Player player) {
         g.setColor(Color.WHITE);
         Point p = player.getBottomLeft();
-        g.fillRect(p.x, p.y, player.d.width, player.d.height);
-        g.drawRect(p.x, p.y, player.d.width, player.d.height);
+        g.fillRect(p.x, p.y, player.getWidth(), player.getHeight());
+        g.drawRect(p.x, p.y, player.getWidth(), player.getHeight());
     }
     
     private void drawBall(Graphics g, Ball b) {

@@ -12,7 +12,7 @@ import java.awt.Dimension;
  * @author halpin
  */
 public class Player extends PhysicsObj{
-    public static Dimension d;
+    private static Dimension d;
     private Point bottomLeft; 
     private String name;
 
@@ -29,17 +29,12 @@ public class Player extends PhysicsObj{
     public void setCenter(Point center) {
         int newX = d.width/2;
         int newY = d.height/2; 
-        System.out.println(newX);      
-        System.out.println(center.x);
-                
         this.bottomLeft = new Point(center.x - newX, center.y-newY);       
     }
     
     public Point getCenter() {
         int newX = d.width/2;
         int newY = d.height/2;
-        System.out.println(newX);      
-        System.out.println(bottomLeft.x);
         return new Point( bottomLeft.x + newX, bottomLeft.y + newY);   
     }
 
@@ -59,5 +54,20 @@ public class Player extends PhysicsObj{
         this.bottomLeft = p;
     }
     
+    public int getLeftEdge() {
+        return getCenter().x - getWidth()/2;
+    }
+    
+    public int getRightEdge() {
+        return getCenter().x + getWidth()/2;
+    }
+    
+    public int getWidth() {
+        return d.width;
+    }
+    
+    public int getHeight() {
+        return d.height;
+    }
     
 }

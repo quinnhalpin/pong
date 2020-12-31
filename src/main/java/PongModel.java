@@ -35,7 +35,9 @@ public class PongModel {
         Player player0 = new Player(playerDimension, new Point(scoreWidth, centerHeight));
         Player player1 = new Player(playerDimension, new Point(d.width - scoreWidth, centerHeight));
         
+        
         players = new Pair(player0, player1);
+        
     }
     
     
