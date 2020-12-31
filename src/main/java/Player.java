@@ -62,6 +62,14 @@ public class Player extends PhysicsObj{
         return getCenter().x + getWidth()/2;
     }
     
+    public int getTopEdge() {
+        return getCenter().y - getHeight()/2;
+    }
+    
+    public int getBottomEdge() {
+        return getCenter().y + getHeight()/2;
+    }
+    
     public int getWidth() {
         return d.width;
     }

@@ -36,23 +36,6 @@ public class Pong {
         
         mainPane.add(pongPanel);
         mainPane.add(Box.createGlue());
-        
-        // TODO: check is down and is right working Q1
-        System.out.println(new Vec(10, 1).isRight() == true);
-        System.out.println(new Vec(10, 1).isDown() == false);
-        
-        // Q2
-        System.out.println(new Vec(100, 1).isRight() == false);
-        System.out.println(new Vec(100, 1).isDown() == false);
-        
-        // Q3
-        System.out.println(new Vec(190, 1).isRight() == false);
-        System.out.println(new Vec(190, 1).isDown() == true);
-        
-        // Q4
-        System.out.println(new Vec(280, 1).isRight() == true);
-        System.out.println(new Vec(280, 1).isDown() == true);
-
     }
     
     private JButton createStartButton() {
@@ -80,17 +63,9 @@ public class Pong {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Boundary detection to change model.ball.v
-                System.out.println("Degrees");
                 Vec ballVec = model.ball.v;
                 double deg = ballVec.getDegrees();
 
-//                boolean isDown = Math.cos(Math.toRadians(deg)) > 0;        
-//                boolean isRight = Math.sin(Math.toRadians(deg)) > 0;
-//                System.out.println(Math.toRadians(deg));
-//                System.out.println("Down");
-//                System.out.println(isDown);
-//                System.out.println("Right");
-//                System.out.println(isRight);
                 int hitWall = ballHitWall();
                 System.out.println(model.ball.v.getDegrees());
                 if (hitWall == 0 || hitWall == 2) {
@@ -123,7 +98,6 @@ public class Pong {
     private void refractBallVertically() {
         boolean isLeftSide = model.ball.center.x < (int)(model.d.width/2);
         Vec ballVec = model.ball.v;
-        System.out.println("Vertical");
 
         double deg = ballVec.getDegrees();
         boolean isRight = ballVec.isRight();        
@@ -143,22 +117,15 @@ public class Pong {
      * @param hitWall 
      */
     private void refractBallHorizontally(int hitWall) {
-        System.out.println("Horizontal");
-        System.out.println(hitWall);
         Vec ballVec = model.ball.v;
         double deg = ballVec.getDegrees();
         
         boolean isRight = ballVec.isRight();        
         boolean isDown = ballVec.isDown();
-        System.out.println("Down");
-        System.out.println(isDown);
-        System.out.println("Right");
-        System.out.println(isRight);
         boolean rightDirection = (hitWall == 1 && !isDown) || (hitWall == 3 && isDown);
 
         if (!rightDirection) {
             double modifier = ((isRight && isDown) || (!isRight && !isDown)) ? 1.0 : -1.0;
-            System.out.println("modifier: " + modifier);
             Double newTheta = (deg + modifier*90.0) % 360;
             model.ball.v = new Vec(newTheta, ballVec.getMagnitude());    
         }
@@ -195,26 +162,25 @@ public class Pong {
         return result;
     }
     
+    private boolean goodHeight(Player player) {
+        int ballCenterY = model.ball.center.y;
+        int r = model.ball.radius;
+        return ((ballCenterY + r) >= player.getTopEdge())
+                && ((ballCenterY - r) <= player.getBottomEdge());
+    }
     
     
     private boolean ballHitAPlayer() {
         Player leftPlayer = model.players.get(0);
         Player rightPlayer = model.players.get(1);
+        
         int ballCenterX = model.ball.center.x;
         int r = model.ball.radius;
         
-        Boolean result;
-        if ((ballCenterX - r) < leftPlayer.getRightEdge()) {
-            result = true;
-        }
-        else if ((ballCenterX + r > rightPlayer.getLeftEdge())) {
-            result = true;
-        }
-        else {
-            result = false;
-        }
-        
-        return result;
+        boolean hitLeftPlayer = (goodHeight(leftPlayer) && ((ballCenterX - r) < leftPlayer.getRightEdge()));
+        boolean hitRightPlayer = (goodHeight(rightPlayer) && ((ballCenterX + r > rightPlayer.getLeftEdge())));
+
+        return hitLeftPlayer || hitRightPlayer;
     }
     
     private void moveRobot() {
