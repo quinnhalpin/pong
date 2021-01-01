@@ -38,16 +38,6 @@ public class Pong {
         mainPane.add(pongPanel);
         mainPane.add(Box.createGlue());
         
-        // Check refract horizontally is working
-        System.out.println(new Vec(95,1).refractHorizontally().getDegrees() == 265.);
-        System.out.println(new Vec(85,1).refractHorizontally().getDegrees() == 275.);
-        // Q3
-        System.out.println(new Vec(265,1).refractHorizontally().getDegrees() == 95.);
-        // Q4
-        System.out.println(new Vec(275,1).refractHorizontally().getDegrees() == 85.);
-        
-        
-        
     }
     
     private JButton createStartButton() {
@@ -117,13 +107,7 @@ public class Pong {
         boolean rightDirection = (isLeftSide && isRight) || (!isLeftSide && !isRight);
 
         if (!rightDirection) {
-            int change = 90;
-            if (deg % 180 == 0) {
-                change = 180;
-            }
-            double modifier = ((isRight && isDown) || (!isRight && !isDown)) ? -1.0 : 1.0;
-            Double newTheta = (deg + modifier*change) % 360;
-            model.ball.v = new Vec(newTheta, ballVec.getMagnitude());
+            model.ball.v = model.ball.v.refractVertically();
         }
     }
     
@@ -144,6 +128,7 @@ public class Pong {
             double change = 90;
             
             if (deg == 90 || deg == 270) {
+                // TODO: keep?
                 int minorChange = (int) new Random().nextDouble()*10 + 1;
                 change = 180 + minorChange;
                 Double newTheta = (deg + change) % 360;

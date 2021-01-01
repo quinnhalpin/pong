@@ -81,4 +81,33 @@ public class Vec {
         Double newTheta = (deg + change) % 360;
         return new Vec(newTheta, magnitude);
     }
+    
+    public Vec refractVertically() {
+        double deg = degrees;
+        boolean isDown = isDown();        
+        boolean isRight = isRight();
+
+        double change = 90;
+        if (deg % 180 == 0) {
+            change = 180;
+        }
+        else if (isRight && !isDown) {
+            // Q1
+            change = 2*(90-deg);
+        }
+        else if (!isRight && !isDown) {
+            // Q2
+            change = -2*(90-(180-deg));
+        }
+        else if (isRight && isDown) {
+            // Q4
+            change = -2*(90-(360-deg));
+        }
+        else {
+            // Q3
+            change = 2*(90-(deg-180));
+        }
+        Double newTheta = (deg + change) % 360;
+        return new Vec(newTheta, magnitude);
+    }
 }
