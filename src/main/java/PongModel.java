@@ -26,8 +26,7 @@ public class PongModel {
         int radius = 10;
         Point center = new Point((int)d.width/2, (int) d.height/2);
         int magnitude = 5;
-//        ball = new Ball(radius, center, magnitude);
-        ball = new Ball(radius, center, new Vec(50, magnitude));
+        ball = new Ball(radius, center, magnitude);
         score = new Pair(0, 0);
         int scoreWidth = (int) (d.width*0.1);
         board = new Board(d, scoreWidth);
@@ -36,11 +35,22 @@ public class PongModel {
         Dimension playerDimension = new Dimension(5, 30);
         Player player0 = new Player(playerDimension, new Point(scoreWidth, centerHeight));
         Player player1 = new Player(playerDimension, new Point(d.width - scoreWidth, centerHeight));
-        
-        
         players = new Pair(player0, player1);
-        
     }
     
+    public void reset() {
+        // set ball position
+        ball.center = new Point((int)d.width/2, (int) d.height/2);
+        ball.v = Vec.getRandomVec(5);
+        
+        // set score to 00
+        score = new Pair(0, 0);
+        // reset player position
+        int scoreWidth = (int) (d.width*0.1);
+        int centerHeight = d.height/2;
+        players.get(0).setCenter(new Point(scoreWidth, centerHeight));
+        players.get(1).setCenter(new Point(d.width - scoreWidth, centerHeight));
+        
+    }
     
 }

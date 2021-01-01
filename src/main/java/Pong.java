@@ -17,7 +17,6 @@ import javax.swing.*;
 public class Pong {
     private final JPanel mainPane;
     private final PongPanel pongPanel;
-    private JButton startButton;
     private final PongModel model;
     private Timer timer;
     
@@ -31,30 +30,44 @@ public class Pong {
         mainPane.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
         mainPane.add(Box.createRigidArea(new Dimension(0, 5)));
         
-        // Creates Start Button
-        startButton = createStartButton();
+        JButton startButton = createButton("Start");
         mainPane.add(startButton);
+        JButton pauseButton = createButton("Pause");
+        mainPane.add(pauseButton);
+        JButton resetButton = createButton("Reset");
+        mainPane.add(resetButton);
         
         mainPane.add(pongPanel);
         mainPane.add(Box.createGlue());
         
+        
     }
-    
-    private JButton createStartButton() {
-        startButton = new javax.swing.JButton();
 
-        startButton.setText("Start");
-        startButton.addActionListener(new java.awt.event.ActionListener() {
+    
+    
+    private JButton createButton(String label) {
+        JButton b = new javax.swing.JButton();
+
+        b.setText(label);
+        b.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                startButtonActionPerformed(evt);
+                buttonActionPerformed(evt, label);
             }
         });
-        return startButton;
+        return b;
     }
     
-    private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {                                            
+    private void buttonActionPerformed(java.awt.event.ActionEvent evt, String label) {                                            
         // TODO add your handling code here:
-        startGame();
+        if (label.equals("Start")) {
+            startGame();
+        }
+        else if (label.equals("Pause")) {
+            pauseGame();
+        }
+        else {
+            resetGame();
+        }
     }
     
     private void startGame() {
@@ -89,6 +102,16 @@ public class Pong {
         };
         timer = new Timer(50, listener);
         timer.start();
+    }
+    
+    private void pauseGame() {
+        timer.stop();
+    }
+    
+    private void resetGame() {
+        timer.stop();
+        model.reset();
+        pongPanel.repaint();
     }
     
     private void moveBall() {
