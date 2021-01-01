@@ -27,23 +27,27 @@ public class Pong {
 
         mainPane = new JPanel();
         mainPane.setLayout(new BoxLayout(mainPane, BoxLayout.PAGE_AXIS));
-        mainPane.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
-        mainPane.add(Box.createRigidArea(new Dimension(0, 5)));
         
-        JButton startButton = createButton("Start");
-        mainPane.add(startButton);
-        JButton pauseButton = createButton("Pause");
-        mainPane.add(pauseButton);
-        JButton resetButton = createButton("Reset");
-        mainPane.add(resetButton);
+        JPanel buttonPanel = makeButtonPanel();
+        mainPane.add(buttonPanel);
         
         mainPane.add(pongPanel);
         mainPane.add(Box.createGlue());
-        
-        
     }
 
-    
+    private JPanel makeButtonPanel() {
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.LINE_AXIS));
+        buttonPanel.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
+        buttonPanel.add(Box.createRigidArea(new Dimension(0, 5)));
+        
+        String[] buttonLabels = {"Start", "Pause", "Reset"};
+        for (String label: buttonLabels) {
+            JButton button = createButton(label);
+            buttonPanel.add(button);
+        }
+        return buttonPanel;
+    }
     
     private JButton createButton(String label) {
         JButton b = new javax.swing.JButton();
@@ -105,13 +109,17 @@ public class Pong {
     }
     
     private void pauseGame() {
-        timer.stop();
+        if (timer != null) {
+            timer.stop();
+        }
     }
     
     private void resetGame() {
-        timer.stop();
-        model.reset();
-        pongPanel.repaint();
+        if (timer != null) {
+            timer.stop();
+            model.reset();
+            pongPanel.repaint();
+        }
     }
     
     private void moveBall() {
