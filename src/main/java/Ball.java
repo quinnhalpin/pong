@@ -13,10 +13,16 @@ public class Ball {
    public Point center;
    public Vec v;
 
-    public Ball(int r, Point c) {
+    public Ball(int r, Point c, int magnitude) {
         radius = r;
         center = c;
-        v = Vec.getRandomVec(10);
+        v = Vec.getRandomVec(magnitude);
+    }
+    
+    public Ball(int r, Point c, Vec vector) {
+        radius = r;
+        center = c;
+        v = vector;
     }
     
     public Point getBottomLeft() {

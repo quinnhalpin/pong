@@ -56,4 +56,29 @@ public class Vec {
     public boolean isRight() {
         return degrees <= 90 || degrees >= 270;
     }
+    
+    public Vec refractHorizontally() {
+        double deg = degrees;
+        boolean isDown = isDown();        
+        boolean isRight = isRight();
+
+        double change = 90;
+        if (deg == 90 || deg == 270) {
+            change = 180;
+        }
+        else if (isRight && !isDown) {
+            change = -2*deg;
+        }
+        else if (!isRight && !isDown) {
+            change = 180-deg + 90-(deg % 90);
+        }
+        else if (isRight && isDown) {
+            change = 2*(360-deg);
+        }
+        else {
+            change = -(180-2*(270-deg));
+        }
+        Double newTheta = (deg + change) % 360;
+        return new Vec(newTheta, magnitude);
+    }
 }

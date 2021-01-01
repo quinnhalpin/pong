@@ -25,7 +25,9 @@ public class PongModel {
         // public
         int radius = 10;
         Point center = new Point((int)d.width/2, (int) d.height/2);
-        ball = new Ball(radius, center);
+        int magnitude = 5;
+//        ball = new Ball(radius, center, magnitude);
+        ball = new Ball(radius, center, new Vec(50, magnitude));
         score = new Pair(0, 0);
         int scoreWidth = (int) (d.width*0.1);
         board = new Board(d, scoreWidth);

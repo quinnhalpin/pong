@@ -1,6 +1,7 @@
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Random;
 import javax.swing.*;
 
 /*
@@ -36,6 +37,17 @@ public class Pong {
         
         mainPane.add(pongPanel);
         mainPane.add(Box.createGlue());
+        
+        // Check refract horizontally is working
+        System.out.println(new Vec(95,1).refractHorizontally().getDegrees() == 265.);
+        System.out.println(new Vec(85,1).refractHorizontally().getDegrees() == 275.);
+        // Q3
+        System.out.println(new Vec(265,1).refractHorizontally().getDegrees() == 95.);
+        // Q4
+        System.out.println(new Vec(275,1).refractHorizontally().getDegrees() == 85.);
+        
+        
+        
     }
     
     private JButton createStartButton() {
@@ -74,7 +86,7 @@ public class Pong {
                     return;
                 }
                 if (hitWall == 1 || hitWall == 3) {
-                    System.out.println("hit wall")
+                    System.out.println("hit wall");
                     refractBallHorizontally(hitWall);
                 }
                 if (ballHitAPlayer()) {
@@ -85,7 +97,7 @@ public class Pong {
                 pongPanel.repaint();
             }
         };
-        timer = new Timer(100, listener);
+        timer = new Timer(50, listener);
         timer.start();
     }
     
@@ -105,8 +117,12 @@ public class Pong {
         boolean rightDirection = (isLeftSide && isRight) || (!isLeftSide && !isRight);
 
         if (!rightDirection) {
+            int change = 90;
+            if (deg % 180 == 0) {
+                change = 180;
+            }
             double modifier = ((isRight && isDown) || (!isRight && !isDown)) ? -1.0 : 1.0;
-            Double newTheta = (deg + modifier*90) % 360;
+            Double newTheta = (deg + modifier*change) % 360;
             model.ball.v = new Vec(newTheta, ballVec.getMagnitude());
         }
     }
@@ -125,9 +141,17 @@ public class Pong {
         boolean rightDirection = (hitWall == 1 && !isDown) || (hitWall == 3 && isDown);
 
         if (!rightDirection) {
-            double modifier = ((isRight && isDown) || (!isRight && !isDown)) ? 1.0 : -1.0;
-            Double newTheta = (deg + modifier*90.0) % 360;
-            model.ball.v = new Vec(newTheta, ballVec.getMagnitude());    
+            double change = 90;
+            
+            if (deg == 90 || deg == 270) {
+                int minorChange = (int) new Random().nextDouble()*10 + 1;
+                change = 180 + minorChange;
+                Double newTheta = (deg + change) % 360;
+                model.ball.v = new Vec(newTheta, ballVec.getMagnitude());    
+            }
+            else {
+                model.ball.v = model.ball.v.refractHorizontally();
+            }
         }
     }
     
