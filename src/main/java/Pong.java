@@ -20,13 +20,16 @@ public class Pong {
     private final PongModel model;
     private JLabel scoreLabel;
     private Timer timer;
-    
+   
     public Pong() {
+        super();
         Dimension d = new Dimension(500,300);
         model = new PongModel(d);
         pongPanel = new PongPanel(this, model);
-
         mainPane = new JPanel();
+    }
+    
+    public void addComponents() {
         mainPane.setLayout(new BoxLayout(mainPane, BoxLayout.PAGE_AXIS));
         
         JPanel buttonPanel = makeButtonPanel();
@@ -37,9 +40,8 @@ public class Pong {
         
         mainPane.add(pongPanel);
         mainPane.add(Box.createGlue());
-        
     }
-
+    
     private JPanel makeScorePanel() {
         JPanel scorePanel = new JPanel();
         scorePanel.setLayout(new BoxLayout(scorePanel, BoxLayout.LINE_AXIS));
@@ -97,6 +99,7 @@ public class Pong {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Boundary detection to change model.ball.v
+                System.out.println(mainPane.isFocusable());
                 Vec ballVec = model.ball.v;
                 double deg = ballVec.getDegrees();
 
@@ -283,8 +286,10 @@ public class Pong {
     
     public static void createAndShowGUI() {
         JFrame frame = new JFrame("Pong");
+
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Pong pong = new Pong();
+        pong.addComponents();
         pong.mainPane.setOpaque(true); //content panes must be opaque
         frame.setContentPane(pong.mainPane);
         

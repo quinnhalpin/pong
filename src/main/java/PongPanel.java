@@ -1,5 +1,7 @@
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -15,7 +17,7 @@ public class PongPanel extends javax.swing.JPanel {
     private Graphics g;
     private Graphics2D g2D;
     PongModel model;
-
+    
     /**
      * Creates new form PongPanel
      */
@@ -23,6 +25,7 @@ public class PongPanel extends javax.swing.JPanel {
         model = m;
         initComponents();
     }
+    
     
     @Override
     public Dimension getMinimumSize() {
