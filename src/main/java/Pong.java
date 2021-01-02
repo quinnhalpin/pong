@@ -176,9 +176,6 @@ public class Pong {
         Player player = model.players.get(0);
         player.step();
         // decay acceleration
-        Vec acc = player.getAcc();
-        double newMagn = Math.max(0, acc.getMagnitude()-0.5);
-        player.setAcc(new Vec(acc.getDegrees(), newMagn));
         
         System.out.println(player.getAcc());        
         System.out.println(player.getVel());

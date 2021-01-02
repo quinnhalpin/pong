@@ -17,13 +17,13 @@ public class Player extends PhysicsObj{
     private String name;
 
     public Player(Dimension d) {
-        super(10, 2);
+        super(25, 3, 0.5, 0.05);
         this.d = d;
         pos = new Point(0, 0);
     }
     
     public Player(Dimension d, Point center) {
-        super(10, 2);
+        super(25, 3, 0.5, 0.05);
         this.d = d;
         setCenter(center);
     }
@@ -110,10 +110,10 @@ public class Player extends PhysicsObj{
 //        setCenter(newCenter);
 //    }
 //    
-    @Override
-    public void step() {
-        Vec newVel = Vec.add(vel, acc);
-        vel = newVel;
-        pos = vel.step(pos);
-    }
+//    @Override
+//    public void step() {
+//        Vec newVel = Vec.add(vel, acc);
+//        vel = newVel;
+//        pos = vel.step(pos);
+//    }
 }

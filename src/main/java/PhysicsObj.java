@@ -14,10 +14,15 @@ public class PhysicsObj {
     protected Vec acc;
     private final double maxAbsVel;
     private final double maxAbsAcc;
+    private final double accDecay;    
+    private final double velDecay;
 
-    public PhysicsObj(double v, double a) {
+
+    public PhysicsObj(double v, double a, double decayAcc, double decayVel) {
         maxAbsVel = v;
         maxAbsAcc = a;
+        accDecay = decayAcc;
+        velDecay = decayVel;
 	pos = new Point(0, 0);
 	vel = new Vec(0, 0);
 	acc = new Vec(0, 0);
@@ -44,12 +49,22 @@ public class PhysicsObj {
     }
 
     public void setAcc(Vec a) {
+        System.out.println("Setting acc");
 	acc = new Vec(a.getDegrees(), Math.min(maxAbsAcc, a.getMagnitude()));
     }
     
     public void step() {
+        System.out.println("in this step");
         Vec newVel = Vec.add(vel, acc);
         setVel(newVel);
         pos = vel.step(pos);
+        
+        // Use a fric force acc
+        double newMagn = Math.max(0, acc.getMagnitude()-accDecay);
+        setAcc(new Vec(acc.getDegrees(), newMagn));
+        
+        double newVelMagn = Math.max(0, vel.getMagnitude()-velDecay);
+        setVel(new Vec(vel.getDegrees(), newVelMagn));
+        
     }
 }
