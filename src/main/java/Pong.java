@@ -29,15 +29,37 @@ public class Pong {
         mainPane = new JPanel();
     }
     
-    public void addComponents() {
-        // add key bindings
-        mainPane.getInputMap(JComponent.WHEN_FOCUSED).put(KeyStroke.getKeyStroke("SPACE"), "doSomething");
-        Action exampleAction = new AbstractAction() {
+    public void addKeyStrokeActions() {
+                
+        Action upAction = new AbstractAction() {
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Pressed space");
+                System.out.println("Pressed up");
             }
         };
-        mainPane.getActionMap().put("doSomething", exampleAction);
+        Action downAction = new AbstractAction() {
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("Pressed down");
+            }
+        };
+        
+        SingleKeyAction up = new SingleKeyAction("UP", upAction);
+        SingleKeyAction down = new SingleKeyAction("DOWN", downAction);
+        
+        SingleKeyAction[] keys = {up, down};
+        for (SingleKeyAction key : keys) {
+            String label = key.getLabel();
+            String actionName = key.getActionName();
+            Action action = key.getAction();
+            mainPane.getInputMap(JComponent.WHEN_FOCUSED).put(KeyStroke.getKeyStroke(label), actionName);
+            mainPane.getActionMap().put(actionName, action);
+        }
+        
+        
+    }
+    
+    public void addComponents() {
+        // add key bindings
+        addKeyStrokeActions();
         
         mainPane.setLayout(new BoxLayout(mainPane, BoxLayout.PAGE_AXIS));
         
