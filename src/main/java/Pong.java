@@ -33,11 +33,16 @@ public class Pong {
                 
         Action upAction = new AbstractAction() {
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Pressed up");
+                if (gameIsRunning()) {
+                    model.players.get(0).moveVertically(-10);
+                }
             }
         };
         Action downAction = new AbstractAction() {
             public void actionPerformed(ActionEvent e) {
+                if (gameIsRunning()) {
+                    model.players.get(0).moveVertically(10);
+                }
                 System.out.println("Pressed down");
             }
         };
@@ -53,8 +58,10 @@ public class Pong {
             mainPane.getInputMap(JComponent.WHEN_FOCUSED).put(KeyStroke.getKeyStroke(label), actionName);
             mainPane.getActionMap().put(actionName, action);
         }
-        
-        
+    }
+    
+    public boolean gameIsRunning() {
+        return timer != null;
     }
     
     public void addComponents() {
@@ -301,8 +308,8 @@ public class Pong {
         int ballCenterX = model.ball.center.x;
         int r = model.ball.radius;
         
-        boolean hitLeftPlayer = (goodHeight(leftPlayer) && ((ballCenterX - r) < leftPlayer.getRightEdge()));
-        boolean hitRightPlayer = (goodHeight(rightPlayer) && ((ballCenterX + r > rightPlayer.getLeftEdge())));
+        boolean hitLeftPlayer = goodHeight(leftPlayer) && ((ballCenterX - r) < leftPlayer.getRightEdge()) && ((ballCenterX) >= leftPlayer.getRightEdge());
+        boolean hitRightPlayer = goodHeight(rightPlayer) && ((ballCenterX + r > rightPlayer.getLeftEdge())) && ((ballCenterX) <= rightPlayer.getLeftEdge());
 
         return hitLeftPlayer || hitRightPlayer;
     }

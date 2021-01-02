@@ -78,4 +78,17 @@ public class Player extends PhysicsObj{
         return d.height;
     }
     
+    /**
+     * stepSize > 0 means move up (bottom of board)
+     * stepSize < 0 means move down (top of board)
+     * 
+     * |stepSize| is amount to move center by vertically
+     * @param stepSize
+     */
+    public void moveVertically(int stepSize) {
+        Point center = getCenter();
+        Point newCenter = new Point(center.x, center.y + stepSize);
+        setCenter(newCenter);
+    }
+    
 }
