@@ -29,19 +29,40 @@ public class Pong {
         mainPane = new JPanel();
     }
     
+    /**
+     * Move player safely within the bounds of the board
+     * stepSize < 0: move down (up on board)
+     * stepSize > 0: move up (down on board)
+     */
+    public void movePlayerVertically(Player player, int stepSize) {
+        boolean moveUp = stepSize > 0;
+        int step = stepSize;
+        if (moveUp) {
+            int distFromTop = Math.max(model.board.getHeight() - player.getBottomEdge(), 0);
+            step = Math.min(distFromTop, step);
+        }
+        else {
+            int distFromBottom = Math.max(player.getTopEdge(), 0);
+            step = -1*Math.min(distFromBottom, Math.abs(step));
+        }
+        player.moveVertically(step);
+    }
+    
     public void addKeyStrokeActions() {
                 
         Action upAction = new AbstractAction() {
             public void actionPerformed(ActionEvent e) {
                 if (gameIsRunning()) {
-                    model.players.get(0).moveVertically(-10);
+                    movePlayerVertically(model.players.get(0), -10);
+//                    model.players.get(0).moveVertically(-10);
                 }
             }
         };
         Action downAction = new AbstractAction() {
             public void actionPerformed(ActionEvent e) {
                 if (gameIsRunning()) {
-                    model.players.get(0).moveVertically(10);
+                    movePlayerVertically(model.players.get(0), 10);
+//                    model.players.get(0).moveVertically(10);
                 }
                 System.out.println("Pressed down");
             }
@@ -314,11 +335,22 @@ public class Pong {
         return hitLeftPlayer || hitRightPlayer;
     }
     
+    private int addNoise() {
+        return (int) (Math.random() * 20) - 10;
+    }
+    
     private void moveRobot() {
         Player robotPlayer = model.players.get(1);
+        // get difference between ball height and player center height
+        int yDiff = model.ball.center.y - robotPlayer.getCenter().y;
+        int diff = Math.min(Math.abs(yDiff), robotPlayer.getMaxStep());
+        int dir = (yDiff > 0) ? 1 : -1;
+        int noise = addNoise();
+        System.out.println(noise);
+        
         Point robotPlayerCenter = new Point(
                 robotPlayer.getCenter().x, 
-                model.ball.center.y
+                robotPlayer.getCenter().y + dir*diff+noise
         );
         robotPlayer.setCenter(robotPlayerCenter);
     }

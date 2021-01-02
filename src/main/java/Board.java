@@ -19,4 +19,12 @@ public class Board {
         this.d = d;
         this.score_width = score_width;
     }
+    
+    public int getHeight() {
+        return d.height;
+    }
+    
+    public int getWidth() {
+        return d.width;
+    }
 }

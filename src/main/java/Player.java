@@ -26,6 +26,14 @@ public class Player extends PhysicsObj{
         setCenter(center);
     }
     
+    /**
+     * max magnitude of step in a time unit
+     * @return int
+     */
+    public int getMaxStep() {
+        return 10;
+    }
+    
     public void setCenter(Point center) {
         int newX = d.width/2;
         int newY = d.height/2; 
