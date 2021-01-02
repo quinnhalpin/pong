@@ -30,6 +30,15 @@ public class Pong {
     }
     
     public void addComponents() {
+        // add key bindings
+        mainPane.getInputMap(JComponent.WHEN_FOCUSED).put(KeyStroke.getKeyStroke("SPACE"), "doSomething");
+        Action exampleAction = new AbstractAction() {
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("Pressed space");
+            }
+        };
+        mainPane.getActionMap().put("doSomething", exampleAction);
+        
         mainPane.setLayout(new BoxLayout(mainPane, BoxLayout.PAGE_AXIS));
         
         JPanel buttonPanel = makeButtonPanel();
@@ -73,6 +82,7 @@ public class Pong {
         b.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonActionPerformed(evt, label);
+                mainPane.requestFocusInWindow();
             }
         });
         return b;
