@@ -161,6 +161,7 @@ public class Pong {
         if (timer != null) {
             timer.stop();
             model.resetGame();
+            updateScoreBoard();
             pongPanel.repaint();
         }
     }

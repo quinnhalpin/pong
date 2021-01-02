@@ -25,7 +25,7 @@ public class PongModel {
         // public
         int radius = 10;
         Point center = new Point((int)d.width/2, (int) d.height/2);
-        int magnitude = 5;
+        int magnitude = 10;
         ball = new Ball(radius, center, magnitude);
         score = new Pair(0, 0);
         int scoreWidth = (int) (d.width*0.1);
@@ -48,7 +48,7 @@ public class PongModel {
     public void reset() {
         // set ball position
         ball.center = new Point((int)d.width/2, (int) d.height/2);
-        ball.v = Vec.getRandomVec(5);
+        ball.v = Vec.getRandomVec((int) ball.v.getMagnitude());
         
         // reset player position
         int scoreWidth = (int) (d.width*0.1);
