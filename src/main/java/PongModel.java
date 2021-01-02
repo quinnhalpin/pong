@@ -38,19 +38,23 @@ public class PongModel {
         players = new Pair(player0, player1);
     }
     
+    public void resetGame() {
+        reset();
+        
+        // set score to 00
+        score = new Pair(0, 0);
+    }
+    
     public void reset() {
         // set ball position
         ball.center = new Point((int)d.width/2, (int) d.height/2);
         ball.v = Vec.getRandomVec(5);
         
-        // set score to 00
-        score = new Pair(0, 0);
         // reset player position
         int scoreWidth = (int) (d.width*0.1);
         int centerHeight = d.height/2;
         players.get(0).setCenter(new Point(scoreWidth, centerHeight));
         players.get(1).setCenter(new Point(d.width - scoreWidth, centerHeight));
-        
     }
     
 }

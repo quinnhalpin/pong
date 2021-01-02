@@ -26,7 +26,7 @@ public class Pair<T> {
         this.arr.set(index, value);
     }
 
-
+    @Override
     public String toString() {
         return "(" + arr.get(0) + ", " + arr.get(1) + ")";
     }

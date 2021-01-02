@@ -18,6 +18,7 @@ public class Pong {
     private final JPanel mainPane;
     private final PongPanel pongPanel;
     private final PongModel model;
+    private JLabel scoreLabel;
     private Timer timer;
     
     public Pong() {
@@ -31,10 +32,24 @@ public class Pong {
         JPanel buttonPanel = makeButtonPanel();
         mainPane.add(buttonPanel);
         
+        JPanel scorePanel = makeScorePanel();
+        mainPane.add(scorePanel);
+        
         mainPane.add(pongPanel);
         mainPane.add(Box.createGlue());
+        
     }
 
+    private JPanel makeScorePanel() {
+        JPanel scorePanel = new JPanel();
+        scorePanel.setLayout(new BoxLayout(scorePanel, BoxLayout.LINE_AXIS));
+        scorePanel.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
+        scoreLabel = new JLabel();
+        updateScoreBoard();
+        scorePanel.add(scoreLabel);
+        return scorePanel;
+    }
+    
     private JPanel makeButtonPanel() {
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.LINE_AXIS));
@@ -86,11 +101,19 @@ public class Pong {
                 double deg = ballVec.getDegrees();
 
                 int hitWall = ballHitWall();
-                System.out.println(model.ball.v.getDegrees());
                 if (hitWall == 0 || hitWall == 2) {
                     System.out.println("Ball scored");
-                    timer.removeActionListener(this);
-                    return;
+                    playerScored(hitWall == 2 ? 1 : 0);
+                    
+                    if (aPlayerWon()) {
+                        System.out.println("A player won");
+                        timer.removeActionListener(this);
+                        return;
+                    }
+                    else {
+                        resetForNextPoint();
+                    }
+                    
                 }
                 if (hitWall == 1 || hitWall == 3) {
                     System.out.println("hit wall");
@@ -108,6 +131,26 @@ public class Pong {
         timer.start();
     }
     
+    private boolean aPlayerWon() {
+        return model.score.get(0) >= 7 || model.score.get(1) >= 7;
+    }
+    
+    /**
+     * 0: left player
+     * 1: right player
+     */
+    private void playerScored(int playerId) {
+        int currentPlayerScore = model.score.get(playerId);
+        System.out.println("Before score: " + model.score);
+        model.score.set(playerId, currentPlayerScore + 1);
+        updateScoreBoard();
+        System.out.println("After Score:" + model.score);
+    }
+    
+    private void updateScoreBoard() {
+        scoreLabel.setText(model.score.get(0) + " to " + model.score.get(1));
+    }
+    
     private void pauseGame() {
         if (timer != null) {
             timer.stop();
@@ -117,9 +160,14 @@ public class Pong {
     private void resetGame() {
         if (timer != null) {
             timer.stop();
-            model.reset();
+            model.resetGame();
             pongPanel.repaint();
         }
+    }
+    
+    private void resetForNextPoint() {
+        model.reset();
+        pongPanel.repaint();
     }
     
     private void moveBall() {

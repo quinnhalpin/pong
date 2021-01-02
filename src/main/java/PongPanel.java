@@ -80,7 +80,7 @@ public class PongPanel extends javax.swing.JPanel {
     }
     
     private void drawBall(Graphics g, Ball b) {
-        g.setColor(Color.BLUE);
+        g.setColor(Color.RED);
         Point bL = b.getBottomLeft();
         g.drawOval(bL.x, bL.y, b.radius, b.radius);
         g.fillOval(bL.x, bL.y, b.radius, b.radius);
