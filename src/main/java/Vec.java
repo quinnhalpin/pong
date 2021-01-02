@@ -38,10 +38,7 @@ public class Vec {
     }
     
     public Point step(Point p) {
-        Double theta = Math.toRadians(degrees);
-        int x = (int) (magnitude*Math.cos(theta));
-        int y = (int) (magnitude*Math.sin(theta));
-        return new Point(p.x+x, p.y+y);
+        return new Point(p.x+getXComp(), p.y+getYComp());
     }
     
     public static Vec getRandomVec(int m) {
@@ -109,5 +106,31 @@ public class Vec {
         }
         Double newTheta = (deg + change) % 360;
         return new Vec(newTheta, magnitude);
+    }
+    
+    
+    public static Vec add(Vec first, Vec second) {
+        double x = first.getXComp() + second.getXComp();
+        double y = first.getYComp() + second.getYComp();
+        Double theta = Math.atan(y/x);
+        Double degrees = Math.toDegrees(theta);
+        Double magnitude = Math.sqrt(x*x + y*y);
+        return new Vec(degrees, magnitude);
+    }
+    
+    public int getXComp() {
+        Double theta = Math.toRadians(degrees);
+        int x = (int) (magnitude*Math.cos(theta));
+        return x;
+    }
+    
+    public int getYComp() {
+        Double theta = Math.toRadians(degrees);
+        int y = (int) (magnitude*Math.sin(theta));
+        return y;
+    }
+    
+    public Vec scale(int scalar) {
+        return new Vec(degrees, magnitude*scalar);
     }
 }

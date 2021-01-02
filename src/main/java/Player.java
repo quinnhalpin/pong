@@ -13,15 +13,17 @@ import java.awt.Dimension;
  */
 public class Player extends PhysicsObj{
     private static Dimension d;
-    private Point bottomLeft; 
+//    private Point bottomLeft; 
     private String name;
 
     public Player(Dimension d) {
+        super(10, 2);
         this.d = d;
-        this.bottomLeft = new Point(0, 0);
+        pos = new Point(0, 0);
     }
     
     public Player(Dimension d, Point center) {
+        super(10, 2);
         this.d = d;
         setCenter(center);
     }
@@ -35,15 +37,19 @@ public class Player extends PhysicsObj{
     }
     
     public void setCenter(Point center) {
-        int newX = d.width/2;
-        int newY = d.height/2; 
-        this.bottomLeft = new Point(center.x - newX, center.y-newY);       
+        pos = center;
+        
+//        int newX = d.width/2;
+//        int newY = d.height/2; 
+//        this.bottomLeft = new Point(center.x - newX, center.y-newY);       
     }
     
     public Point getCenter() {
-        int newX = d.width/2;
-        int newY = d.height/2;
-        return new Point( bottomLeft.x + newX, bottomLeft.y + newY);   
+        return pos;
+        
+//        int newX = d.width/2;
+//        int newY = d.height/2;
+//        return new Point( bottomLeft.x + newX, bottomLeft.y + newY);   
     }
 
     public void setName(String n) {
@@ -55,11 +61,16 @@ public class Player extends PhysicsObj{
     }
     
     public Point getBottomLeft() {
-        return this.bottomLeft;
+        int newX = d.width/2;
+        int newY = d.height/2; 
+        Point bottomLeft = new Point(pos.x - newX, pos.y-newY);     
+        return bottomLeft;
     }
     
     public void setBottomLeft(Point p) {
-        this.bottomLeft = p;
+        int newX = d.width/2;
+        int newY = d.height/2; 
+        pos = new Point(pos.x + newX, pos.y + newY); 
     }
     
     public int getLeftEdge() {
@@ -86,17 +97,23 @@ public class Player extends PhysicsObj{
         return d.height;
     }
     
-    /**
-     * stepSize > 0 means move up (bottom of board)
-     * stepSize < 0 means move down (top of board)
-     * 
-     * |stepSize| is amount to move center by vertically
-     * @param stepSize
-     */
-    public void moveVertically(int stepSize) {
-        Point center = getCenter();
-        Point newCenter = new Point(center.x, center.y + stepSize);
-        setCenter(newCenter);
+//    /**
+//     * stepSize > 0 means move up (bottom of board)
+//     * stepSize < 0 means move down (top of board)
+//     * 
+//     * |stepSize| is amount to move center by vertically
+//     * @param stepSize
+//     */
+//    public void moveVertically(int stepSize) {
+//        Point center = getCenter();
+//        Point newCenter = new Point(center.x, center.y + stepSize);
+//        setCenter(newCenter);
+//    }
+//    
+    @Override
+    public void step() {
+        Vec newVel = Vec.add(vel, acc);
+        vel = newVel;
+        pos = vel.step(pos);
     }
-    
 }

@@ -22,30 +22,51 @@ public class Pong {
     private Timer timer;
    
     public Pong() {
-        super();
         Dimension d = new Dimension(500,300);
         model = new PongModel(d);
         pongPanel = new PongPanel(this, model);
         mainPane = new JPanel();
+        
+        // Test add Vec works
+        System.out.println(Vec.add(new Vec(0, 2), new Vec(90, 5)));
+        
     }
     
     /**
      * Move player safely within the bounds of the board
      * stepSize < 0: move down (up on board)
      * stepSize > 0: move up (down on board)
+     * @param player
+     * @param stepSize
      */
     public void movePlayerVertically(Player player, int stepSize) {
-        boolean moveUp = stepSize > 0;
-        int step = stepSize;
-        if (moveUp) {
-            int distFromTop = Math.max(model.board.getHeight() - player.getBottomEdge(), 0);
-            step = Math.min(distFromTop, step);
+        double d = (stepSize > 0) ? 90 : 270;
+        player.setAcc(new Vec(d, Math.abs(stepSize)));
+        
+        
+//        boolean moveUp = stepSize > 0;
+//        int step = stepSize;
+//        if (moveUp) {
+//            int distFromTop = Math.max(model.board.getHeight() - player.getBottomEdge(), 0);
+//            step = Math.min(distFromTop, step);
+//        }
+//        else {
+//            int distFromBottom = Math.max(player.getTopEdge(), 0);
+//            step = -1*Math.min(distFromBottom, Math.abs(step));
+//        }
+//        player.moveVertically(step);
+    }
+    
+    public void movePlayerInsideBoard(Player player) {
+        // Check if player is still in bounds
+        int halfPlayerHeight = player.getHeight()/2;
+        int boardHeight = model.board.getHeight();
+        if ((player.getPos().y - halfPlayerHeight) < 0) {
+            player.setPos(player.getPos().x, halfPlayerHeight);
         }
-        else {
-            int distFromBottom = Math.max(player.getTopEdge(), 0);
-            step = -1*Math.min(distFromBottom, Math.abs(step));
+        else if ((player.getPos().y + halfPlayerHeight) > boardHeight) {
+            player.setPos(player.getPos().x, boardHeight - halfPlayerHeight);
         }
-        player.moveVertically(step);
     }
     
     public void addKeyStrokeActions() {
@@ -151,6 +172,21 @@ public class Pong {
         }
     }
     
+    private void moveMainPlayer() {
+        Player player = model.players.get(0);
+        player.step();
+        // decay acceleration
+        Vec acc = player.getAcc();
+        double newMagn = Math.max(0, acc.getMagnitude()-0.5);
+        player.setAcc(new Vec(acc.getDegrees(), newMagn));
+        
+        System.out.println(player.getAcc());        
+        System.out.println(player.getVel());
+        System.out.println(player.getPos());
+
+        movePlayerInsideBoard(player);
+    }
+    
     private void startGame() {
         System.out.println("Start Game");
         pongPanel.repaint();
@@ -187,6 +223,7 @@ public class Pong {
                 }
                 moveBall();
                 moveRobot();
+                moveMainPlayer();
                 pongPanel.repaint();
             }
         };
