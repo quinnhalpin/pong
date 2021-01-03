@@ -2,6 +2,7 @@
 import java.awt.*;
 import java.awt.event.*;
 import java.util.Random;
+import java.util.Set;
 import javax.swing.*;
 
 /*
@@ -273,7 +274,6 @@ public class Pong {
         model.ball.center = newCenter;
     }
     
-    
     private void refractBallVertically() {
         boolean isLeftSide = model.ball.center.x < (int)(model.d.width/2);
         Vec ballVec = model.ball.v;
@@ -375,18 +375,13 @@ public class Pong {
     
     private void moveRobot() {
         Player robotPlayer = model.players.get(1);
-        // get difference between ball height and player center height
-        int yDiff = model.ball.center.y - robotPlayer.getCenter().y;
-        int diff = Math.min(Math.abs(yDiff), robotPlayer.getMaxStep());
-        int dir = (yDiff > 0) ? 1 : -1;
-        int noise = addNoise();
-        System.out.println(noise);
         
-        Point robotPlayerCenter = new Point(
-                robotPlayer.getCenter().x, 
-                robotPlayer.getCenter().y + dir*diff+noise
-        );
-        robotPlayer.setCenter(robotPlayerCenter);
+        // Try and set acceleration just in the general direction of difference between the ball and the robot
+        int yDiff = model.ball.center.y - robotPlayer.getCenter().y;
+        double accDegrees = (yDiff > 0) ? 90 : 270;
+        robotPlayer.setAcc(new Vec(accDegrees, 2));
+        robotPlayer.step();
+        movePlayerInsideBoard(robotPlayer);
     }
     
     public static void createAndShowGUI() {

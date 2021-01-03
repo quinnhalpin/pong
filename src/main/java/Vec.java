@@ -133,4 +133,29 @@ public class Vec {
     public Vec scale(int scalar) {
         return new Vec(degrees, magnitude*scalar);
     }
+    
+    /**
+     * Return
+     * @param v
+     * @param pos
+     * @param x
+     * @return -1 if v will not intercept x=x
+     */
+    public static int numTimeUnitsToXIntercept(Vec v, Point pos, int x) {
+        int timeUnits = (x - pos.x)/v.getXComp();
+        return (timeUnits >= 0) ? timeUnits : -1;
+    }
+    
+    /**
+     * Return
+     * @param v
+     * @param pos
+     * @param x
+     * @return -1 if y is negative
+     */
+    public static int yAtXIntercept(Vec v, Point pos, int x) {
+        int t = Vec.numTimeUnitsToXIntercept(v, pos, x);
+        int y = v.getYComp()*t + pos.y;
+        return (y >= 0) ? y : -1;
+    }
 }

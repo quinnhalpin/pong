@@ -13,7 +13,6 @@ import java.awt.Dimension;
  */
 public class Player extends PhysicsObj{
     private static Dimension d;
-//    private Point bottomLeft; 
     private String name;
 
     public Player(Dimension d) {
@@ -23,7 +22,7 @@ public class Player extends PhysicsObj{
     }
     
     public Player(Dimension d, Point center) {
-        super(25, 3, 0.5, 0.05);
+        super(25, 3, 0.3, 0.05);
         this.d = d;
         setCenter(center);
     }
@@ -38,18 +37,10 @@ public class Player extends PhysicsObj{
     
     public void setCenter(Point center) {
         pos = center;
-        
-//        int newX = d.width/2;
-//        int newY = d.height/2; 
-//        this.bottomLeft = new Point(center.x - newX, center.y-newY);       
     }
     
     public Point getCenter() {
         return pos;
-        
-//        int newX = d.width/2;
-//        int newY = d.height/2;
-//        return new Point( bottomLeft.x + newX, bottomLeft.y + newY);   
     }
 
     public void setName(String n) {
