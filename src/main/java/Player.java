@@ -52,9 +52,7 @@ public class Player extends PhysicsObj{
     }
     
     public Point getBottomLeft() {
-        int newX = d.width/2;
-        int newY = d.height/2; 
-        Point bottomLeft = new Point(pos.x - newX, pos.y-newY);     
+        Point bottomLeft = new Point(pos.x - getWidth()/2, pos.y-getHeight()/2);     
         return bottomLeft;
     }
     

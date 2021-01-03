@@ -40,7 +40,7 @@ public class PhysicsObj {
 	return vel;
     }
 
-    private void setVel(Vec v) {
+    public void setVel(Vec v) {
         vel = new Vec(v.getDegrees(), Math.min(maxAbsVel, v.getMagnitude()));
     }
 
@@ -49,12 +49,10 @@ public class PhysicsObj {
     }
 
     public void setAcc(Vec a) {
-        System.out.println("Setting acc");
 	acc = new Vec(a.getDegrees(), Math.min(maxAbsAcc, a.getMagnitude()));
     }
     
     public void step() {
-        System.out.println("in this step");
         Vec newVel = Vec.add(vel, acc);
         setVel(newVel);
         pos = vel.step(pos);

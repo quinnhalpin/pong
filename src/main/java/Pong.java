@@ -177,11 +177,6 @@ public class Pong {
         Player player = model.players.get(0);
         player.step();
         // decay acceleration
-        
-        System.out.println(player.getAcc());        
-        System.out.println(player.getVel());
-        System.out.println(player.getPos());
-
         movePlayerInsideBoard(player);
     }
     
@@ -193,7 +188,6 @@ public class Pong {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Boundary detection to change model.ball.v
-                System.out.println(mainPane.isFocusable());
                 Vec ballVec = model.ball.v;
                 double deg = ballVec.getDegrees();
 
@@ -239,10 +233,8 @@ public class Pong {
      */
     private void playerScored(int playerId) {
         int currentPlayerScore = model.score.get(playerId);
-        System.out.println("Before score: " + model.score);
         model.score.set(playerId, currentPlayerScore + 1);
         updateScoreBoard();
-        System.out.println("After Score:" + model.score);
     }
     
     private void updateScoreBoard() {
@@ -318,7 +310,6 @@ public class Pong {
     }
     
     
-    
     /**
      * -1: Didn't hit a wall
      * 0: right wall
@@ -363,8 +354,8 @@ public class Pong {
         int ballCenterX = model.ball.center.x;
         int r = model.ball.radius;
         
-        boolean hitLeftPlayer = goodHeight(leftPlayer) && ((ballCenterX - r) < leftPlayer.getRightEdge()) && ((ballCenterX) >= leftPlayer.getRightEdge());
-        boolean hitRightPlayer = goodHeight(rightPlayer) && ((ballCenterX + r > rightPlayer.getLeftEdge())) && ((ballCenterX) <= rightPlayer.getLeftEdge());
+        boolean hitLeftPlayer = goodHeight(leftPlayer) && ((ballCenterX - r) <= leftPlayer.getRightEdge()) && ((ballCenterX) >= leftPlayer.getRightEdge());
+        boolean hitRightPlayer = goodHeight(rightPlayer) && ((ballCenterX + r >= rightPlayer.getLeftEdge())) && ((ballCenterX) <= rightPlayer.getLeftEdge());
 
         return hitLeftPlayer || hitRightPlayer;
     }

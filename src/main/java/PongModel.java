@@ -1,5 +1,7 @@
 
 import java.awt.Dimension;
+import java.util.HashSet;
+import java.util.Set;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -25,8 +27,10 @@ public class PongModel {
         // public
         int radius = 10;
         Point center = new Point((int)d.width/2, (int) d.height/2);
-        int magnitude = 10;
-        ball = new Ball(radius, center, magnitude);
+        
+        ball = new Ball(radius, center, getBallStartingVec());
+        
+        
         score = new Pair(0, 0);
         int scoreWidth = (int) (d.width*0.1);
         board = new Board(d, scoreWidth);
@@ -36,6 +40,14 @@ public class PongModel {
         Player player0 = new Player(playerDimension, new Point(scoreWidth, centerHeight));
         Player player1 = new Player(playerDimension, new Point(d.width - scoreWidth, centerHeight));
         players = new Pair(player0, player1);
+    }
+    
+    public Vec getBallStartingVec() {
+        int magnitude = 12;
+        int quadrent = (int) (Math.random()*4);
+        double ballDegrees = (quadrent*90) + (Math.random()*60 + 15);
+        System.out.println("ball degress: " + ballDegrees);
+        return new Vec(ballDegrees, magnitude);
     }
     
     public void resetGame() {
@@ -48,13 +60,21 @@ public class PongModel {
     public void reset() {
         // set ball position
         ball.center = new Point((int)d.width/2, (int) d.height/2);
-        ball.v = Vec.getRandomVec((int) ball.v.getMagnitude());
+        ball.v = getBallStartingVec();
         
         // reset player position
         int scoreWidth = (int) (d.width*0.1);
         int centerHeight = d.height/2;
-        players.get(0).setCenter(new Point(scoreWidth, centerHeight));
-        players.get(1).setCenter(new Point(d.width - scoreWidth, centerHeight));
+        
+        Player mainPlayer = players.get(0);
+        Player robot = players.get(1);
+        mainPlayer.setCenter(new Point(scoreWidth, centerHeight));
+        mainPlayer.setAcc(new Vec(0, 0));
+        mainPlayer.setVel(new Vec(0, 0));
+        
+        robot.setCenter(new Point(d.width - scoreWidth, centerHeight));
+        robot.setAcc(new Vec(0, 0));
+        robot.setVel(new Vec(0, 0));
     }
     
 }

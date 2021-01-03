@@ -74,7 +74,6 @@ public class PongPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     
-        
     private void drawPlayer(Graphics g, Player player) {
         g.setColor(Color.WHITE);
         Point p = player.getBottomLeft();
