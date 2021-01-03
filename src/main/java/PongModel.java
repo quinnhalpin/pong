@@ -46,7 +46,6 @@ public class PongModel {
         int magnitude = 12;
         int quadrent = (int) (Math.random()*4);
         double ballDegrees = (quadrent*90) + (Math.random()*60 + 15);
-        System.out.println("ball degress: " + ballDegrees);
         return new Vec(ballDegrees, magnitude);
     }
     

@@ -10,8 +10,6 @@
  */
 public class Ball extends PhysicsObj {
    public final int radius;
-//   public Point center;
-//   public Vec v;
 
     public Ball(int r, Point c, int magnitude) {
         super(25, 3, 0, 0);

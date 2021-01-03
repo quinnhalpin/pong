@@ -2,7 +2,6 @@
 import java.awt.*;
 import java.awt.event.*;
 import java.util.Random;
-import java.util.Set;
 import javax.swing.*;
 
 /*
@@ -27,22 +26,6 @@ public class Pong {
         model = new PongModel(d);
         pongPanel = new PongPanel(this, model);
         mainPane = new JPanel();
-        
-        // CHecking my vector math
-        System.out.println("Checking my vector math");
-        Vec a = new Vec(130., 2.95);
-        Vec b = new Vec(140., 2.4);
-        
-        System.out.println(Math.toRadians(270));
-        System.out.println(Math.cos(Math.toRadians(270)));
-        
-        
-        System.out.println(Vec.add(a, b));
-        System.out.println(a.getXComp());
-        System.out.println(a.getYComp());
-        System.out.println(b.getXComp());
-        System.out.println(b.getYComp());
-        
     }
     
     /**
@@ -83,7 +66,6 @@ public class Pong {
                 if (gameIsRunning()) {
                     movePlayerVertically(model.players.get(0), 10);
                 }
-                System.out.println("Pressed down");
             }
         };
         
@@ -173,15 +155,10 @@ public class Pong {
     private void moveMainPlayer() {
         Player player = model.players.get(0);
         player.step();
-        // decay acceleration
         movePlayerInsideBoard(player);
-        
-        System.out.println("Main Player ACC:" + player.getAcc().toString());
-        System.out.println("Main Player Vel:" + player.getVel().toString());
     }
     
     private void startGame() {
-        System.out.println("Start Game");
         pongPanel.repaint();
         
         ActionListener listener = new AbstractAction() {
@@ -193,11 +170,9 @@ public class Pong {
 
                 int hitWall = ballHitWall();
                 if (hitWall == 0 || hitWall == 2) {
-                    System.out.println("Ball scored");
                     playerScored(hitWall == 2 ? 1 : 0);
                     
                     if (aPlayerWon()) {
-                        System.out.println("A player won");
                         timer.removeActionListener(this);
                         return;
                     }
@@ -207,7 +182,6 @@ public class Pong {
                     
                 }
                 if (hitWall == 1 || hitWall == 3) {
-                    System.out.println("hit wall");
                     refractBallHorizontally(hitWall);
                 }
                 if (ballHitAPlayer()) {
@@ -262,14 +236,10 @@ public class Pong {
     }
     
     private void moveBall() {
-        // not sure why you can't do this
         model.ball.step();
-//        Point newCenter = model.ball.getVel().step(model.ball.getCenter());
-//        model.ball.setCenter(newCenter);
     }
     
     private void refractBallVertically() {
-        System.out.println("in refractBall Horizontally");
         boolean isLeftSide = model.ball.getCenter().x < (int)(model.d.width/2);
         Vec ballVec = model.ball.getVel();
 
@@ -289,7 +259,6 @@ public class Pong {
      * @param hitWall 
      */
     private void refractBallHorizontally(int hitWall) {
-        System.out.println("in refractBall Horizontally");
         Vec ballVec = model.ball.getVel();
         double deg = ballVec.getDegrees();
         
