@@ -28,9 +28,6 @@ public class Pong {
         pongPanel = new PongPanel(this, model);
         mainPane = new JPanel();
         
-        // Test add Vec works
-        System.out.println(Vec.add(new Vec(0, 2), new Vec(90, 5)));
-        
     }
     
     /**
@@ -247,11 +244,14 @@ public class Pong {
     }
     
     private void moveBall() {
+        // not sure why you can't do this
+//        model.ball.step();
         Point newCenter = model.ball.getVel().step(model.ball.getCenter());
         model.ball.setCenter(newCenter);
     }
     
     private void refractBallVertically() {
+        System.out.println("in refractBall Horizontally");
         boolean isLeftSide = model.ball.getCenter().x < (int)(model.d.width/2);
         Vec ballVec = model.ball.getVel();
 
@@ -271,6 +271,7 @@ public class Pong {
      * @param hitWall 
      */
     private void refractBallHorizontally(int hitWall) {
+        System.out.println("in refractBall Horizontally");
         Vec ballVec = model.ball.getVel();
         double deg = ballVec.getDegrees();
         

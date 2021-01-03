@@ -14,15 +14,14 @@ public class Ball extends PhysicsObj {
 //   public Vec v;
 
     public Ball(int r, Point c, int magnitude) {
-        // ex: super(25, 3, 0.5, 0.05);
-        super(25, 3, 0.5, 0.05);
+        super(25, 3, 0, 0);
         radius = r;
         pos = c;
         vel = Vec.getRandomVec(magnitude);
     }
     
     public Ball(int r, Point c, Vec vector) {
-        super(25, 3, 0.5, 0.05);
+        super(25, 3, 0, 0);
         radius = r;
         pos = c;
         vel = vector;
