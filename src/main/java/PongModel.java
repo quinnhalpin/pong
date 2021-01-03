@@ -59,8 +59,8 @@ public class PongModel {
     
     public void reset() {
         // set ball position
-        ball.center = new Point((int)d.width/2, (int) d.height/2);
-        ball.v = getBallStartingVec();
+        ball.setCenter(new Point((int)d.width/2, (int) d.height/2));
+        ball.setVel(getBallStartingVec());
         
         // reset player position
         int scoreWidth = (int) (d.width*0.1);

@@ -8,25 +8,36 @@
  *
  * @author halpin
  */
-public class Ball {
+public class Ball extends PhysicsObj {
    public final int radius;
-   public Point center;
-   public Vec v;
+//   public Point center;
+//   public Vec v;
 
     public Ball(int r, Point c, int magnitude) {
+        // ex: super(25, 3, 0.5, 0.05);
+        super(25, 3, 0.5, 0.05);
         radius = r;
-        center = c;
-        v = Vec.getRandomVec(magnitude);
+        pos = c;
+        vel = Vec.getRandomVec(magnitude);
     }
     
     public Ball(int r, Point c, Vec vector) {
+        super(25, 3, 0.5, 0.05);
         radius = r;
-        center = c;
-        v = vector;
+        pos = c;
+        vel = vector;
+    }
+    
+    public void setCenter(Point c) {
+        pos = c;
+    }
+    
+    public Point getCenter() {
+        return pos;
     }
     
     public Point getBottomLeft() {
-        Point p = new Point(center.x - radius, center.y - radius);
+        Point p = new Point(pos.x - radius, pos.y - radius);
         return p;
     }
 }

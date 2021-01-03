@@ -43,19 +43,6 @@ public class Pong {
     public void movePlayerVertically(Player player, int stepSize) {
         double d = (stepSize > 0) ? 90 : 270;
         player.setAcc(new Vec(d, Math.abs(stepSize)));
-        
-        
-//        boolean moveUp = stepSize > 0;
-//        int step = stepSize;
-//        if (moveUp) {
-//            int distFromTop = Math.max(model.board.getHeight() - player.getBottomEdge(), 0);
-//            step = Math.min(distFromTop, step);
-//        }
-//        else {
-//            int distFromBottom = Math.max(player.getTopEdge(), 0);
-//            step = -1*Math.min(distFromBottom, Math.abs(step));
-//        }
-//        player.moveVertically(step);
     }
     
     public void movePlayerInsideBoard(Player player) {
@@ -76,7 +63,6 @@ public class Pong {
             public void actionPerformed(ActionEvent e) {
                 if (gameIsRunning()) {
                     movePlayerVertically(model.players.get(0), -10);
-//                    model.players.get(0).moveVertically(-10);
                 }
             }
         };
@@ -84,7 +70,6 @@ public class Pong {
             public void actionPerformed(ActionEvent e) {
                 if (gameIsRunning()) {
                     movePlayerVertically(model.players.get(0), 10);
-//                    model.players.get(0).moveVertically(10);
                 }
                 System.out.println("Pressed down");
             }
@@ -188,7 +173,7 @@ public class Pong {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Boundary detection to change model.ball.v
-                Vec ballVec = model.ball.v;
+                Vec ballVec = model.ball.getVel();
                 double deg = ballVec.getDegrees();
 
                 int hitWall = ballHitWall();
@@ -262,13 +247,13 @@ public class Pong {
     }
     
     private void moveBall() {
-        Point newCenter = model.ball.v.step(model.ball.center);
-        model.ball.center = newCenter;
+        Point newCenter = model.ball.getVel().step(model.ball.getCenter());
+        model.ball.setCenter(newCenter);
     }
     
     private void refractBallVertically() {
-        boolean isLeftSide = model.ball.center.x < (int)(model.d.width/2);
-        Vec ballVec = model.ball.v;
+        boolean isLeftSide = model.ball.getCenter().x < (int)(model.d.width/2);
+        Vec ballVec = model.ball.getVel();
 
         double deg = ballVec.getDegrees();
         boolean isRight = ballVec.isRight();        
@@ -276,7 +261,7 @@ public class Pong {
         boolean rightDirection = (isLeftSide && isRight) || (!isLeftSide && !isRight);
 
         if (!rightDirection) {
-            model.ball.v = model.ball.v.refractVertically();
+            model.ball.setVel(model.ball.getVel().refractVertically());
         }
     }
     
@@ -286,7 +271,7 @@ public class Pong {
      * @param hitWall 
      */
     private void refractBallHorizontally(int hitWall) {
-        Vec ballVec = model.ball.v;
+        Vec ballVec = model.ball.getVel();
         double deg = ballVec.getDegrees();
         
         boolean isRight = ballVec.isRight();        
@@ -301,10 +286,10 @@ public class Pong {
                 int minorChange = (int) new Random().nextDouble()*10 + 1;
                 change = 180 + minorChange;
                 Double newTheta = (deg + change) % 360;
-                model.ball.v = new Vec(newTheta, ballVec.getMagnitude());    
+                model.ball.setVel(new Vec(newTheta, ballVec.getMagnitude()));    
             }
             else {
-                model.ball.v = model.ball.v.refractHorizontally();
+                model.ball.setVel(model.ball.getVel().refractHorizontally());
             }
         }
     }
@@ -321,16 +306,16 @@ public class Pong {
     private int ballHitWall() {
         int result;
         int radius = model.ball.radius;
-        if (model.ball.center.x - radius <= 0) {
+        if (model.ball.getCenter().x - radius <= 0) {
             result = 2;
         }
-        else if (model.ball.center.x >= model.d.width) {
+        else if (model.ball.getCenter().x >= model.d.width) {
             result = 0;
         }
-        else if ((model.ball.center.y - radius) <= 0) {
+        else if ((model.ball.getCenter().y - radius) <= 0) {
             result = 1;
         }
-        else if ((model.ball.center.y + radius) >= model.d.height) {
+        else if ((model.ball.getCenter().y + radius) >= model.d.height) {
             result = 3;
         }
         else {
@@ -340,7 +325,7 @@ public class Pong {
     }
     
     private boolean goodHeight(Player player) {
-        int ballCenterY = model.ball.center.y;
+        int ballCenterY = model.ball.getCenter().y;
         int r = model.ball.radius;
         return ((ballCenterY + r) >= player.getTopEdge())
                 && ((ballCenterY - r) <= player.getBottomEdge());
@@ -351,7 +336,7 @@ public class Pong {
         Player leftPlayer = model.players.get(0);
         Player rightPlayer = model.players.get(1);
         
-        int ballCenterX = model.ball.center.x;
+        int ballCenterX = model.ball.getCenter().x;
         int r = model.ball.radius;
         
         boolean hitLeftPlayer = goodHeight(leftPlayer) && ((ballCenterX - r) <= leftPlayer.getRightEdge()) && ((ballCenterX) >= leftPlayer.getRightEdge());
@@ -368,7 +353,7 @@ public class Pong {
         Player robotPlayer = model.players.get(1);
         
         // Try and set acceleration just in the general direction of difference between the ball and the robot
-        int yDiff = model.ball.center.y - robotPlayer.getCenter().y;
+        int yDiff = model.ball.getCenter().y - robotPlayer.getCenter().y;
         double accDegrees = (yDiff > 0) ? 90 : 270;
         robotPlayer.setAcc(new Vec(accDegrees, 2));
         robotPlayer.step();
