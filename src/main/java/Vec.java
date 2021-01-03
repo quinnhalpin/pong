@@ -119,19 +119,37 @@ public class Vec {
         
         double x = first.getXComp() + second.getXComp();
         double y = first.getYComp() + second.getYComp();
-        Double theta = Math.atan(y/x);
-        Double degrees = Math.toDegrees(theta);
+        Double degrees;
+        if (x == 0) {
+            // Avoid dividing by 0
+            degrees = (y > 0) ? 90. : 270.;
+        }
+        else {
+           Double theta = Math.atan(y/x);
+           System.out.println("Theta: " + theta);
+           degrees = Math.toDegrees(theta); 
+           degrees = (x < 0 && y < 0) ? degrees + 180 : degrees;
+           degrees = (x < 0 && y > 0) ? degrees - 180 : degrees;
+           
+        }
+        
         Double magnitude = Math.sqrt(x*x + y*y);
         return new Vec(degrees, magnitude);
     }
     
     public double getXComp() {
+        if (degrees == 270 || degrees == 90) {
+            return 0;
+        }
         Double theta = Math.toRadians(degrees);
         double x = magnitude*Math.cos(theta);
         return x;
     }
     
     public double getYComp() {
+        if (degrees == 0 || degrees == 180) {
+            return 0;
+        }
         Double theta = Math.toRadians(degrees);
         double y =magnitude*Math.sin(theta);
         return y;

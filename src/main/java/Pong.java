@@ -30,8 +30,13 @@ public class Pong {
         
         // CHecking my vector math
         System.out.println("Checking my vector math");
-        Vec a = new Vec(52., 11.40175425099138);
-        Vec b = new Vec(0., 1.);
+        Vec a = new Vec(130., 2.95);
+        Vec b = new Vec(140., 2.4);
+        
+        System.out.println(Math.toRadians(270));
+        System.out.println(Math.cos(Math.toRadians(270)));
+        
+        
         System.out.println(Vec.add(a, b));
         System.out.println(a.getXComp());
         System.out.println(a.getYComp());
@@ -170,6 +175,9 @@ public class Pong {
         player.step();
         // decay acceleration
         movePlayerInsideBoard(player);
+        
+        System.out.println("Main Player ACC:" + player.getAcc().toString());
+        System.out.println("Main Player Vel:" + player.getVel().toString());
     }
     
     private void startGame() {

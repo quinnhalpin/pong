@@ -69,7 +69,5 @@ public class PhysicsObj {
         
         double newVelMagn = Math.max(0, vel.getMagnitude()-velDecay);
         setVel(new Vec(vel.getDegrees(), newVelMagn));
-        System.out.println("Vel after decya" + vel.toString());
-        
     }
 }
