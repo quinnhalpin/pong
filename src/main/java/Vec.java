@@ -38,7 +38,7 @@ public class Vec {
     }
     
     public Point step(Point p) {
-        return new Point(p.x+getXComp(), p.y+getYComp());
+        return new Point((int) (p.x+getXComp()), (int) (p.y+getYComp()));
     }
     
     public static Vec getRandomVec(int m) {
@@ -110,6 +110,13 @@ public class Vec {
     
     
     public static Vec add(Vec first, Vec second) {
+        if (first.magnitude == 0) {
+            return new Vec(second.degrees, second.magnitude);
+        }
+        if (second.magnitude == 0) {
+            return new Vec(first.degrees, first.magnitude);
+        }
+        
         double x = first.getXComp() + second.getXComp();
         double y = first.getYComp() + second.getYComp();
         Double theta = Math.atan(y/x);
@@ -118,15 +125,15 @@ public class Vec {
         return new Vec(degrees, magnitude);
     }
     
-    public int getXComp() {
+    public double getXComp() {
         Double theta = Math.toRadians(degrees);
-        int x = (int) (magnitude*Math.cos(theta));
+        double x = magnitude*Math.cos(theta);
         return x;
     }
     
-    public int getYComp() {
+    public double getYComp() {
         Double theta = Math.toRadians(degrees);
-        int y = (int) (magnitude*Math.sin(theta));
+        double y =magnitude*Math.sin(theta);
         return y;
     }
     
@@ -142,7 +149,9 @@ public class Vec {
      * @return -1 if v will not intercept x=x
      */
     public static int numTimeUnitsToXIntercept(Vec v, Point pos, int x) {
-        int timeUnits = (x - pos.x)/v.getXComp();
+        double numerator = x-pos.x;
+        double denominator = v.getXComp();
+        int timeUnits = (int) (numerator/denominator);
         return (timeUnits >= 0) ? timeUnits : -1;
     }
     
@@ -155,7 +164,8 @@ public class Vec {
      */
     public static int yAtXIntercept(Vec v, Point pos, int x) {
         int t = Vec.numTimeUnitsToXIntercept(v, pos, x);
-        int y = v.getYComp()*t + pos.y;
+        int firstComp = (int) v.getYComp()*t;
+        int y = firstComp + pos.y;
         return (y >= 0) ? y : -1;
     }
 }

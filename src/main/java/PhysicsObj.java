@@ -58,13 +58,7 @@ public class PhysicsObj {
     
     public void step() {
         
-        // Seems to break all fo the players
-//        Point newCenter = getVel().step(getPos());
-//        setPos(newCenter);
-        
         Vec newVel = Vec.add(vel, acc);
-        System.out.println("Vel" + vel.toString());
-        System.out.println("Acc" + acc.toString());
         
         setVel(newVel);
         pos = vel.step(pos);
@@ -74,13 +68,8 @@ public class PhysicsObj {
         setAcc(new Vec(acc.getDegrees(), newMagn));
         
         double newVelMagn = Math.max(0, vel.getMagnitude()-velDecay);
-        System.out.println("Acc" + acc.toString());
         setVel(new Vec(vel.getDegrees(), newVelMagn));
-        
-        
-        // Balls
-//        Point newCenter = model.ball.getVel().step(model.ball.getCenter());
-//        model.ball.setCenter(newCenter);
+        System.out.println("Vel after decya" + vel.toString());
         
     }
 }

@@ -28,6 +28,16 @@ public class Pong {
         pongPanel = new PongPanel(this, model);
         mainPane = new JPanel();
         
+        // CHecking my vector math
+        System.out.println("Checking my vector math");
+        Vec a = new Vec(52., 11.40175425099138);
+        Vec b = new Vec(0., 1.);
+        System.out.println(Vec.add(a, b));
+        System.out.println(a.getXComp());
+        System.out.println(a.getYComp());
+        System.out.println(b.getXComp());
+        System.out.println(b.getYComp());
+        
     }
     
     /**
@@ -245,9 +255,9 @@ public class Pong {
     
     private void moveBall() {
         // not sure why you can't do this
-//        model.ball.step();
-        Point newCenter = model.ball.getVel().step(model.ball.getCenter());
-        model.ball.setCenter(newCenter);
+        model.ball.step();
+//        Point newCenter = model.ball.getVel().step(model.ball.getCenter());
+//        model.ball.setCenter(newCenter);
     }
     
     private void refractBallVertically() {
