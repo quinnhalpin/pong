@@ -327,8 +327,8 @@ public class Pong {
         int ballCenterX = model.ball.getCenter().x;
         int r = model.ball.radius;
         
-        boolean hitLeftPlayer = goodHeight(leftPlayer) && ((ballCenterX - r) <= leftPlayer.getRightEdge()) && ((ballCenterX) >= leftPlayer.getRightEdge());
-        boolean hitRightPlayer = goodHeight(rightPlayer) && ((ballCenterX + r >= rightPlayer.getLeftEdge())) && ((ballCenterX) <= rightPlayer.getLeftEdge());
+        boolean hitLeftPlayer = goodHeight(leftPlayer) && ((ballCenterX - r) <= leftPlayer.getRightEdge()) && ((ballCenterX) >= leftPlayer.getLeftEdge());
+        boolean hitRightPlayer = goodHeight(rightPlayer) && ((ballCenterX + r >= rightPlayer.getLeftEdge())) && ((ballCenterX) <= rightPlayer.getRightEdge());
 
         return hitLeftPlayer || hitRightPlayer;
     }
@@ -343,7 +343,7 @@ public class Pong {
         // Try and set acceleration just in the general direction of difference between the ball and the robot
         int yDiff = model.ball.getCenter().y - robotPlayer.getCenter().y;
         double accDegrees = (yDiff > 0) ? 90 : 270;
-        robotPlayer.setAcc(new Vec(accDegrees, 2));
+        robotPlayer.setAcc(new Vec(accDegrees, 3));
         robotPlayer.step();
         movePlayerInsideBoard(robotPlayer);
     }

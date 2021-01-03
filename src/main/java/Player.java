@@ -16,13 +16,13 @@ public class Player extends PhysicsObj{
     private String name;
 
     public Player(Dimension d) {
-        super(25, 3, 0.5, 1);
+        super(25, 5, 0.5, 2);
         this.d = d;
         pos = new Point(0, 0);
     }
     
     public Player(Dimension d, Point center) {
-        super(25, 3, 0.5, 1);
+        super(25, 5, 0.5, 2); 
         this.d = d;
         setCenter(center);
     }
