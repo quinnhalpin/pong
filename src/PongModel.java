@@ -18,12 +18,16 @@ public class PongModel {
 		this.score = new Pair<Integer>(Integer.valueOf(0), Integer.valueOf(0));
 	}
 
+	public Pair<Integer> getScore() {
+		return score;
+	}
+
 	public void setScore(Pair<Integer> score) {
 		this.score = score;
 	}
 
-	public Pair<Integer> getScore() {
-		return score;
+	public void setPlayersScore(int index, int score) {
+		this.score.set(index, score);
 	}
 
 	public void setBallPos(int x, int y) {

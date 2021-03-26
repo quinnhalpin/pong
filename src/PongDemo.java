@@ -31,5 +31,13 @@ public class PongDemo {
 
 		PongModel model = new PongModel();
 		System.out.println(model.getScore());
+		model.setScore(new Pair(Integer.valueOf(3), Integer.valueOf(1)));
+		System.out.println(model.getScore());
+
+		PongViewer v = new PongViewer(model);
+
+		while (true) {
+			
+		}
 	} 
 }
